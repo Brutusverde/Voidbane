@@ -7,16 +7,25 @@ using UnityEngine.UI;
 
 public class UINetwork : NetworkBehaviour
 {
-    public Slider slider;
+    public Slider hpSlider;
+    public Slider staminaSlider;
+    public Slider sanitySlider;
     public PlayerNetwork playerNetwork;
-    public TextMeshProUGUI text;
+    public TextMeshProUGUI hpText;
+    public TextMeshProUGUI staminaText;
+    public TextMeshProUGUI sanityText;
 
     public override void OnNetworkSpawn()
     {
         if (!IsOwner)
         {
-            text.gameObject.SetActive(false);
-            slider.gameObject.SetActive(false);
+            hpText.gameObject.SetActive(false);
+            staminaText.gameObject.SetActive(false);
+            sanityText.gameObject.SetActive(false);
+
+            hpSlider.gameObject.SetActive(false);
+            staminaSlider.gameObject.SetActive(false);
+            sanitySlider.gameObject.SetActive(false);
         }
     }
 
@@ -25,7 +34,12 @@ public class UINetwork : NetworkBehaviour
     void Update()
     {
         if (!IsOwner) return;
-        slider.value = playerNetwork.HealthPoint.Value;
-        text.text = playerNetwork.HealthPoint.Value.ToString();
+        hpSlider.value = playerNetwork.HealthPoint.Value;
+        staminaSlider.value = playerNetwork.StaminaPoint.Value;
+        sanitySlider.value = playerNetwork.SanityPoint.Value;
+
+        hpText.text = Mathf.Round(playerNetwork.HealthPoint.Value).ToString();
+        staminaText.text = Mathf.Round(playerNetwork.StaminaPoint.Value).ToString();
+        sanityText.text = Mathf.Round(playerNetwork.SanityPoint.Value).ToString();
     }
 }

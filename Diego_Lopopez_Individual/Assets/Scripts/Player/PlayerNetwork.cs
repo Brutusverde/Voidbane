@@ -25,7 +25,15 @@ public class PlayerNetwork : NetworkBehaviour
 
     [Header("Health")]
     public int maxHealth;
-    [HideInInspector] public NetworkVariable<int> HealthPoint = new NetworkVariable<int>();
+    public float maxStamina;
+    public float looseStamina;
+    public float recoverStamina;
+    public float maxSanity;
+
+    //[HideInInspector] 
+    public NetworkVariable<int> HealthPoint = new NetworkVariable<int>();
+    public NetworkVariable<float> StaminaPoint = new NetworkVariable<float>();
+    public NetworkVariable<float> SanityPoint = new NetworkVariable<float>();
 
     [Header("Jump")]
     public float jumpForce;
@@ -37,9 +45,15 @@ public class PlayerNetwork : NetworkBehaviour
     public KeyCode jumpkey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
 
+    private bool isRuning;
+
     public override void OnNetworkSpawn()
     {
+        //Set player variables at max value
         HealthPoint.Value = maxHealth;
+        StaminaPoint.Value = maxStamina;
+        SanityPoint.Value = maxSanity;
+
         if (!IsOwner) return;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -61,12 +75,39 @@ public class PlayerNetwork : NetworkBehaviour
 
         if (Input.GetKeyDown(sprintKey) && grounded)
         {
-            speed = sprintSpeed;
+            if (rb.velocity != new Vector3(0, 0, 0) && StaminaPoint.Value > 0)
+            {
+                speed = sprintSpeed;
+                isRuning = true;
+            }    
         }
 
-        if (Input.GetKeyUp(sprintKey))
+        if (Input.GetKeyUp(sprintKey) || StaminaPoint.Value <= 0)
         {
+            isRuning = false;
             speed = moveSpeed;
+        }
+    }
+
+    //Loose stamina when running
+    [ServerRpc(RequireOwnership = false)]
+    private void looseStaminaServerRPC()
+    {
+        StaminaPoint.Value -= looseStamina * Time.deltaTime;
+        if (StaminaPoint.Value <= 0)
+        {
+            StaminaPoint.Value = 0;
+        }
+    }
+
+    //Recover stamina when not running
+    [ServerRpc(RequireOwnership = false)]
+    private void recoverStaminaServerRPC()
+    {
+        StaminaPoint.Value += recoverStamina * Time.deltaTime;
+        if(StaminaPoint.Value >= maxStamina)
+        {
+            StaminaPoint.Value = maxStamina;
         }
     }
 
@@ -77,6 +118,15 @@ public class PlayerNetwork : NetworkBehaviour
         myInput();
         speedControl();
         MovePlayer();
+
+        if (isRuning)
+        {
+            looseStaminaServerRPC();
+        }
+        else
+        {
+            recoverStaminaServerRPC();
+        }
 
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
 
