@@ -6,17 +6,43 @@ using Unity.Netcode;
 public class LockerInteract : NetworkBehaviour
 {
     public Camera cam;
+    public MeshRenderer mRenderer;
+    public NetworkVariable<bool> ColorOn = new NetworkVariable<bool>();
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        if (!IsOwner)
+        {
+            cam.transform.gameObject.SetActive(false);
+        }
+        mRenderer = GetComponentInChildren<MeshRenderer>();
+        ColorOn.Value = true;
+
+
+    }
 
     // Update is called once per frame
     void Update()
     {
         if (!IsOwner) return;
-        if (Input.GetKeyDown(KeyCode.P))
+        
+        if (ColorOn.Value == true)
+        {
+            mRenderer.enabled = true;
+        }
+        if (ColorOn.Value == false)
+        {
+            mRenderer.enabled = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
         {
             RaycastHit hit;
             if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 20f))
             {
-                lockerServerRPC(cam.transform.forward);
+                lockerServerRPC(cam.transform.forward); 
             }
         }
 
@@ -25,7 +51,7 @@ public class LockerInteract : NetworkBehaviour
             RaycastHit hit;
             if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 20f))
             {
-                lockerDebugServerRPC(cam.transform.forward);
+                lockerServerRPC(cam.transform.forward);
             }
         }
     }
@@ -38,7 +64,23 @@ public class LockerInteract : NetworkBehaviour
         {
             if (hit.transform.GetComponent<LockerBehaviour>())
             {
-                hit.transform.GetComponent<LockerBehaviour>().LockerFull.Value = true;
+                //Locker is empty, put player inside
+                LockerBehaviour locker = hit.transform.GetComponent<LockerBehaviour>();
+                if(locker.LockerFull.Value == false)
+                {
+                    
+                    locker.LockerFull.Value = true;
+                    Debug.Log(hit.transform.GetComponent<LockerBehaviour>().LockerFull.Value);
+                    ColorOn.Value = false;
+
+                }
+                else if (locker.LockerFull.Value == true)
+                {
+                    locker.LockerFull.Value = false;
+                    Debug.Log(hit.transform.GetComponent<LockerBehaviour>().LockerFull.Value);
+                    ColorOn.Value = true;
+                }
+
             }
         }
     }
@@ -55,4 +97,17 @@ public class LockerInteract : NetworkBehaviour
             }
         }
     }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void goInServerRPC()
+    {
+        ColorOn.Value = false;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void goOutServerRPC()
+    {
+        ColorOn.Value = true;
+    }
+
 }
