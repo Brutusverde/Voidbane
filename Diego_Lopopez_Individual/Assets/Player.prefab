@@ -1815,9 +1815,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ccb5c6d911bfe4395bcd776bd2057d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 5631849623989298387}
-  mRenderer: {fileID: 0}
-  isMeshEnabled: 0
+  InLocker:
+    m_InternalValue: 0
+  cam: {fileID: 0}
+  playerCam: {fileID: 0}
+  cameraHolder: {fileID: 8556301990085755849}
+  playerNetwork: {fileID: 0}
+  gunNetwork: {fileID: 0}
+  rb: {fileID: 0}
+  capsuleCollider: {fileID: 0}
   animator: {fileID: 0}
 --- !u!1 &8037746862239389346
 GameObject:
