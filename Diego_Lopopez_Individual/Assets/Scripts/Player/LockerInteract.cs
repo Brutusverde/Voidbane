@@ -28,21 +28,6 @@ public class LockerInteract : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-
-        playerCam = GetComponentInChildren<PlayerCam>();
-        cam = GetComponentInChildren<Camera>();
-        playerNetwork = GetComponent<PlayerNetwork>();
-        gunNetwork = GetComponent<GunNetwork>();
-        rb = GetComponent<Rigidbody>();
-        capsuleCollider = GetComponentInChildren<CapsuleCollider>();
-        animator = GetComponentInChildren<Animator>();
-
-
-        if (!IsOwner)
-        {
-            cam.transform.gameObject.SetActive(false);
-            cameraHolder.gameObject.SetActive(false);
-        }  
         InLocker.Value = false;
     }
 
@@ -50,34 +35,6 @@ public class LockerInteract : NetworkBehaviour
     void Update()
     {
         if (!IsOwner) return;
-        
-        //Turn off mesh renderer
-        if (InLocker.Value == true)
-        {
-            if (!IsLocalPlayer) return;
-
-            //playerCam.enabled = false;
-            playerNetwork.enabled = false;
-            gunNetwork.enabled = false;
-            rb.useGravity = false;
-            capsuleCollider.isTrigger = true;
-
-            animator.SetBool("TurnOff", true);
-        }
-
-        //Turn on mesh renderer
-        if (InLocker.Value == false)
-        {
-            if (!IsLocalPlayer) return;
-
-            //playerCam.enabled = true;
-            playerNetwork.enabled = true;
-            gunNetwork.enabled = true;
-            rb.useGravity = true;
-            capsuleCollider.isTrigger = false;
-
-            animator.SetBool("TurnOff", false);
-        }
 
         //Input for locker interaction
         if (Input.GetKeyDown(KeyCode.E))
@@ -87,24 +44,77 @@ public class LockerInteract : NetworkBehaviour
             {
                 if (hit.transform.GetComponent<LockerBehaviour>())
                 {
-                    lockerServerRPC(cam.transform.forward); 
-                }
-                    
-            }
-        }
+                    lockerServerRPC(cam.transform.forward);
 
-        //Input for locker debug
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            RaycastHit hit;
-            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 20f))
-            {
-                lockerDebugServerRPC(cam.transform.forward);
+                    //This is for visuals on clients side
+
+                    //If you are the host
+                    if (IsHost)
+                    {
+                        //Locker is full, put player outside
+                        if (InLocker.Value == false)
+                        {
+                            playerCam.enabled = true;
+                            playerNetwork.enabled = true;
+                            gunNetwork.enabled = true;
+                            rb.useGravity = true;
+                            capsuleCollider.isTrigger = false;
+                            animator.SetBool("TurnOff", false);
+
+                            cam.transform.SetPositionAndRotation(cameraHolder.position, cameraHolder.rotation);
+                        }
+
+                        //Locker is empty, put player inside
+                        if (InLocker.Value == true)
+                        {
+                            playerCam.enabled = false;
+                            playerNetwork.enabled = false;
+                            gunNetwork.enabled = false;
+                            rb.useGravity = false;
+                            capsuleCollider.isTrigger = true;
+                            animator.SetBool("TurnOff", true);
+
+                            LockerBehaviour locker = hit.transform.GetComponent<LockerBehaviour>();
+                            cam.transform.SetPositionAndRotation(locker.cameraPoint.position, locker.cameraPoint.rotation);
+                        }
+                    }
+
+                    //If you are the client
+                    if (!IsHost)
+                    {
+                        //Locker is full, put player outside
+                        if (InLocker.Value == true)
+                        {
+                            playerCam.enabled = true;
+                            playerNetwork.enabled = true;
+                            gunNetwork.enabled = true;
+                            rb.useGravity = true;
+                            capsuleCollider.isTrigger = false;
+                            animator.SetBool("TurnOff", false);
+
+                            cam.transform.SetPositionAndRotation(cameraHolder.position, cameraHolder.rotation);
+                        }
+
+                        //Locker is empty, put player inside
+                        if (InLocker.Value == false)
+                        {
+                            playerCam.enabled = false;
+                            playerNetwork.enabled = false;
+                            gunNetwork.enabled = false;
+                            rb.useGravity = false;
+                            capsuleCollider.isTrigger = true;
+                            animator.SetBool("TurnOff", true);
+
+                            LockerBehaviour locker = hit.transform.GetComponent<LockerBehaviour>();
+                            cam.transform.SetPositionAndRotation(locker.cameraPoint.position, locker.cameraPoint.rotation);
+                        }
+                    }
+                }   
             }
         }
     }
 
-    //Server RPC for locker control
+    //Server RPC for locker 
     [ServerRpc(RequireOwnership = false)]
     private void lockerServerRPC(Vector3 rotation)
     {
@@ -117,14 +127,19 @@ public class LockerInteract : NetworkBehaviour
                 LockerBehaviour locker = hit.transform.GetComponent<LockerBehaviour>();
                 if(locker.LockerFull.Value == false)
                 {
-                    
                     locker.LockerFull.Value = true;
                     Debug.Log(hit.transform.GetComponent<LockerBehaviour>().LockerFull.Value);
-                    InLocker.Value = true;
-                    playerCam.enabled = false;
-                    //cam.transform.position = locker.cameraPoint.position;
-                    //cam.transform.rotation = locker.cameraPoint.rotation;
+                    
+                    cam.transform.SetPositionAndRotation(locker.cameraPoint.position, locker.cameraPoint.rotation);
 
+                    playerCam.enabled = true;
+                    playerNetwork.enabled = true;
+                    gunNetwork.enabled = true;
+                    rb.useGravity = true;
+                    capsuleCollider.isTrigger = false;
+
+                    animator.SetBool("TurnOff", true);
+                    InLocker.Value = true;
                 }
 
                 //Locker is full, put player outside
@@ -132,26 +147,18 @@ public class LockerInteract : NetworkBehaviour
                 {
                     locker.LockerFull.Value = false;
                     Debug.Log(hit.transform.GetComponent<LockerBehaviour>().LockerFull.Value);
+                    
+                    cam.transform.SetPositionAndRotation(cameraHolder.position, cameraHolder.rotation);
+
+                    playerCam.enabled = false;
+                    playerNetwork.enabled = false;
+                    gunNetwork.enabled = false;
+                    rb.useGravity = false;
+                    capsuleCollider.isTrigger = true;
+
+                    animator.SetBool("TurnOff", false);
                     InLocker.Value = false;
-                    playerCam.enabled = true;
-                    //cam.transform.position = cameraHolder.position;
-                    //cam.transform.rotation = cameraHolder.rotation;
                 }
-
-            }
-        }
-    }
-
-    //Server RPC for locker debug
-    [ServerRpc(RequireOwnership = false)]
-    private void lockerDebugServerRPC(Vector3 rotation)
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(cam.transform.position, rotation, out hit, 20f))
-        {
-            if (hit.transform.GetComponent<LockerBehaviour>())
-            {
-                Debug.Log( hit.transform.GetComponent<LockerBehaviour>().LockerFull.Value);
             }
         }
     }

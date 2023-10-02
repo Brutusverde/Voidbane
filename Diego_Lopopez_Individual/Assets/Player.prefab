@@ -1817,14 +1817,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InLocker:
     m_InternalValue: 0
-  cam: {fileID: 0}
-  playerCam: {fileID: 0}
+  cam: {fileID: 5631849623989298387}
+  playerCam: {fileID: 3585859033238561894}
   cameraHolder: {fileID: 8556301990085755849}
-  playerNetwork: {fileID: 0}
-  gunNetwork: {fileID: 0}
-  rb: {fileID: 0}
-  capsuleCollider: {fileID: 0}
-  animator: {fileID: 0}
+  playerNetwork: {fileID: 7749583290343922167}
+  gunNetwork: {fileID: 1302200711891125255}
+  rb: {fileID: 62230860617540219}
+  capsuleCollider: {fileID: 6090639153941148359}
+  animator: {fileID: 5711061088404536047}
 --- !u!1 &8037746862239389346
 GameObject:
   m_ObjectHideFlags: 0
