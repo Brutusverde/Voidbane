@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3182582120222076424}
   - component: {fileID: 7873095612167177944}
   - component: {fileID: 5790065802597679157}
+  - component: {fileID: 5574230177860319489}
   m_Layer: 0
   m_Name: Taquilla
   m_TagString: Untagged
@@ -36,7 +37,7 @@ Transform:
   - {fileID: 7718991402876391926}
   - {fileID: 3389787276859406650}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &3538008048144471544
 BoxCollider:
@@ -93,6 +94,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LockerFull:
     m_InternalValue: 0
+  SomeoneHere:
+    m_InternalValue: 0
   cameraPoint: {fileID: 3389787276859406650}
 --- !u!114 &5790065802597679157
 MonoBehaviour:
@@ -124,6 +127,27 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!65 &5574230177860319489
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5763800001084477043}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.27, y: 2.96, z: 0.63}
+  m_Center: {x: 0.33, y: 0, z: 0}
 --- !u!1 &7374531064718394278
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,7 +172,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7374531064718394278}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.009, y: 1.201, z: 0.015}
+  m_LocalPosition: {x: -0.129, y: 1.201, z: 0.018}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

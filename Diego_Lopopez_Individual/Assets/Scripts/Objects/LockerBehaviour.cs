@@ -6,6 +6,7 @@ using Unity.Netcode;
 public class LockerBehaviour : NetworkBehaviour
 {
     public NetworkVariable<bool> LockerFull = new NetworkVariable<bool>();
+    public NetworkVariable<bool> SomeoneHere = new NetworkVariable<bool>();
     public Transform cameraPoint;
 
 

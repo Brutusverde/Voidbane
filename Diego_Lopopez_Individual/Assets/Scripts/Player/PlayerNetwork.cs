@@ -15,7 +15,7 @@ public class PlayerNetwork : NetworkBehaviour
     [Header("Ground check")]
     private float playerHeight = 2;
     public LayerMask whatIsGround;
-    private bool grounded;
+    public bool grounded;
 
     public Transform orientation;
     float horizontalInput;
