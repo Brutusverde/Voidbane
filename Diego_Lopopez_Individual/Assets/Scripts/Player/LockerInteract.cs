@@ -2,22 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using System;
 
 public class LockerInteract : NetworkBehaviour
 {
     public Camera cam;
     public MeshRenderer mRenderer;
     public NetworkVariable<bool> ColorOn = new NetworkVariable<bool>();
+    public bool isMeshEnabled;
+    public Animator animator;
 
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
+        animator = GetComponentInChildren<Animator>();
 
         if (!IsOwner)
         {
             cam.transform.gameObject.SetActive(false);
         }
-        mRenderer = GetComponentInChildren<MeshRenderer>();
+        
         ColorOn.Value = true;
 
 
@@ -30,11 +34,13 @@ public class LockerInteract : NetworkBehaviour
         
         if (ColorOn.Value == true)
         {
-            mRenderer.enabled = true;
+            if (!IsLocalPlayer) return;
+            animator.SetBool("TurnOff", true);
         }
         if (ColorOn.Value == false)
         {
-            mRenderer.enabled = false;
+            if (!IsLocalPlayer) return;
+            animator.SetBool("TurnOff", false);
         }
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -110,4 +116,7 @@ public class LockerInteract : NetworkBehaviour
         ColorOn.Value = true;
     }
 
+    private class SyncVarAttribute : Attribute
+    {
+    }
 }
