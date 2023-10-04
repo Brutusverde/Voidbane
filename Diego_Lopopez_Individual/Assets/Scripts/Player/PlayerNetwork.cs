@@ -8,7 +8,7 @@ public class PlayerNetwork : NetworkBehaviour
     [Header("Movement")]
     public float moveSpeed;
     public float sprintSpeed;
-    float speed;
+    public float speed;
 
     public float groundDrag;
 
@@ -46,6 +46,8 @@ public class PlayerNetwork : NetworkBehaviour
     public KeyCode sprintKey = KeyCode.LeftShift;
 
     private bool isRuning;
+    public bool resting;
+    public bool inLocker;
 
     public override void OnNetworkSpawn()
     {
@@ -64,6 +66,7 @@ public class PlayerNetwork : NetworkBehaviour
     private void myInput()
     {
         if (!IsOwner) return;
+        if (inLocker) return;
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
         if(Input.GetKey(jumpkey) && readyToJump && grounded)
@@ -137,6 +140,11 @@ public class PlayerNetwork : NetworkBehaviour
         else
         {
             rb.drag = 0;
+        }
+
+        if (inLocker)
+        {
+            isRuning = false;
         }
     }
 

@@ -14,6 +14,7 @@ public class LockerInteract : NetworkBehaviour
     public Camera cam;
     public PlayerCam playerCam;
     public Transform cameraHolder;
+    public Headbob headbob;
 
     //Player components
     public PlayerNetwork playerNetwork;
@@ -49,43 +50,42 @@ public class LockerInteract : NetworkBehaviour
                         //Locker is full, put player outside
                         if (locker.LockerFull.Value == false)
                         {
+                            headbob.enable = true;
+                            playerNetwork.inLocker = false;
+                            playerNetwork.speed = 2;
                             //Leave player move the camera
                             playerCam.enabled = true;
-                            //Leave player move
-                            playerNetwork.enabled = true;
                             //Leave player use weapon
                             gunNetwork.enabled = true;
                             //Return gravity to rb
-                            rb.useGravity = true;
-                            //Turn on physics
-                            rb.Sleep();
+                            rb.isKinematic = false;
                             //Return collider
                             capsuleCollider.isTrigger = false;
                             //Play animation
                             animator.SetBool("TurnOff", false);
                             //Move camera to player body
                             cam.transform.SetPositionAndRotation(cameraHolder.position, cameraHolder.rotation);
+                            
                         }
 
                         //Locker is empty, put player inside
                         if (locker.LockerFull.Value == true)
                         {
+                            headbob.enable = false;
+                            playerNetwork.inLocker = true;
                             //Turn off camera moving
                             playerCam.enabled = false;
-                            //Turn off player moving
-                            playerNetwork.enabled = false;
                             //Turn off player weapon
                             gunNetwork.enabled = false;
                             //Quit gravity from rb
-                            rb.useGravity = false;
-                            //Turn off physics
-                            rb.Sleep();
+                            rb.isKinematic = true;
                             //Turn off collider
                             capsuleCollider.isTrigger = true;
                             //Play animation
                             animator.SetBool("TurnOff", true);
                             //Move camera to player body
                             cam.transform.SetPositionAndRotation(locker.cameraPoint.position, locker.cameraPoint.rotation);
+                            
                         }
                     }
 
@@ -95,43 +95,42 @@ public class LockerInteract : NetworkBehaviour
                         //Locker is full, put player outside
                         if (locker.LockerFull.Value == true)
                         {
+                            headbob.enable = true;
+                            playerNetwork.inLocker = false;
+                            playerNetwork.speed = 2;
                             //Leave player move the camera
                             playerCam.enabled = true;
-                            //Leave player move
-                            playerNetwork.enabled = true;
                             //Leave player use weapon
                             gunNetwork.enabled = true;
                             //Return gravity to rb
-                            rb.useGravity = true;
-                            //Turn on physics
-                            rb.Sleep();
+                            rb.isKinematic = false;
                             //Return collider
                             capsuleCollider.isTrigger = false;
                             //Play animation
                             animator.SetBool("TurnOff", false);
                             //Move camera to player body
                             cam.transform.SetPositionAndRotation(cameraHolder.position, cameraHolder.rotation);
+                           
                         }
 
                         //Locker is empty, put player inside
                         if (locker.LockerFull.Value == false)
                         {
+                            headbob.enable = false;
+                            playerNetwork.inLocker = true;
                             //Turn off camera moving
                             playerCam.enabled = false;
-                            //Turn off player moving
-                            playerNetwork.enabled = false;
                             //Turn off player weapon
                             gunNetwork.enabled = false;
                             //Quit gravity from rb
-                            rb.useGravity = false;
-                            //Turn off physics
-                            rb.Sleep();
+                            rb.isKinematic = true;
                             //Turn off collider
                             capsuleCollider.isTrigger = true;
                             //Play animation
                             animator.SetBool("TurnOff", true);
                             //Move camera to player body
                             cam.transform.SetPositionAndRotation(locker.cameraPoint.position, locker.cameraPoint.rotation);
+                            
                         }
                     }
                 }   
@@ -152,16 +151,15 @@ public class LockerInteract : NetworkBehaviour
                 LockerBehaviour locker = hit.transform.GetComponent<LockerBehaviour>();
                 if(locker.LockerFull.Value == true)
                 {
+                    headbob.enable = true;
+                    playerNetwork.inLocker = false;
+                    playerNetwork.speed = 2;
                     //Leave player move the camera
                     playerCam.enabled = true;
-                    //Leave player move
-                    playerNetwork.enabled = true;
                     //Leave player use weapon
                     gunNetwork.enabled = true;
                     //Return gravity to rb
-                    rb.useGravity = true;
-                    //Turn on physics
-                    rb.Sleep();
+                    rb.isKinematic = false;
                     //Return collider
                     capsuleCollider.isTrigger = false;
                     //Play animation
@@ -169,22 +167,21 @@ public class LockerInteract : NetworkBehaviour
                     //Move camera to player body
                     cam.transform.SetPositionAndRotation(cameraHolder.position, cameraHolder.rotation);
                     locker.LockerFull.Value = false;
+                    
                 }
 
                 
                 //Locker is empty, put player inside
                 else if (locker.LockerFull.Value == false)
                 {
+                    headbob.enable = false;
+                    playerNetwork.inLocker = true;
                     //Turn off camera moving
                     playerCam.enabled = false;
-                    //Turn off player moving
-                    playerNetwork.enabled = false;
                     //Turn off player weapon
                     gunNetwork.enabled = false;
                     //Quit gravity from rb
-                    rb.useGravity = false;
-                    //Turn off physics
-                    rb.Sleep();
+                    rb.isKinematic = true;
                     //Turn off collider
                     capsuleCollider.isTrigger = true;
                     //Play animation
@@ -192,6 +189,7 @@ public class LockerInteract : NetworkBehaviour
                     //Move camera to player body
                     cam.transform.SetPositionAndRotation(locker.cameraPoint.position, locker.cameraPoint.rotation);
                     locker.LockerFull.Value = true;
+                    
                 }
             }
         }

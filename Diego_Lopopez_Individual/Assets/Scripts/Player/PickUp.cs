@@ -55,11 +55,13 @@ public class PickUp : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void MoveObjectServerRPC(Vector3 holdA)
     {
-        if (Vector3.Distance(heldObject.transform.position, holdA) > 0.1f)
-        {
-            Vector3 moveDirection = (holdA - heldObject.transform.position);
-            heldObjRB.AddForce(moveDirection * pickupForce);
-        }
+        heldObject.transform.position = holdA;
+        //if (Vector3.Distance(heldObject.transform.position, holdA) > 0.2f)
+        //{
+        //    Vector3 moveDirection = (holdA - heldObject.transform.position);
+        //    heldObject.transform.position = holdArea.transform.position;
+        //    //heldObjRB.AddForce(moveDirection * pickupForce);
+        //}
     }
 
     [ServerRpc(RequireOwnership = false)]
