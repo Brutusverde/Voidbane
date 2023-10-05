@@ -15,6 +15,8 @@ public class LockerInteract : NetworkBehaviour
     public PlayerCam playerCam;
     public Transform cameraHolder;
     public Headbob headbob;
+    public DynamicDOF dof;
+    public Volume dofVolume;
 
     //Player components
     public PlayerNetwork playerNetwork;
@@ -53,6 +55,9 @@ public class LockerInteract : NetworkBehaviour
                             headbob.enable = true;
                             playerNetwork.inLocker = false;
                             playerNetwork.speed = 2;
+                            dofVolume.gameObject.SetActive(true);
+                            dof.enabled = true;
+                            
                             //Leave player move the camera
                             playerCam.enabled = true;
                             //Leave player use weapon
@@ -73,6 +78,8 @@ public class LockerInteract : NetworkBehaviour
                         {
                             headbob.enable = false;
                             playerNetwork.inLocker = true;
+                            dofVolume.gameObject.SetActive(false);
+                            dof.enabled = false;
                             //Turn off camera moving
                             playerCam.enabled = false;
                             //Turn off player weapon
@@ -98,6 +105,8 @@ public class LockerInteract : NetworkBehaviour
                             headbob.enable = true;
                             playerNetwork.inLocker = false;
                             playerNetwork.speed = 2;
+                            dofVolume.gameObject.SetActive(true);
+                            dof.enabled = true;
                             //Leave player move the camera
                             playerCam.enabled = true;
                             //Leave player use weapon
@@ -118,6 +127,8 @@ public class LockerInteract : NetworkBehaviour
                         {
                             headbob.enable = false;
                             playerNetwork.inLocker = true;
+                            dofVolume.gameObject.SetActive(false);
+                            dof.enabled = false;
                             //Turn off camera moving
                             playerCam.enabled = false;
                             //Turn off player weapon
@@ -154,6 +165,8 @@ public class LockerInteract : NetworkBehaviour
                     headbob.enable = true;
                     playerNetwork.inLocker = false;
                     playerNetwork.speed = 2;
+                    dofVolume.gameObject.SetActive(true);
+                    dof.enabled = true;
                     //Leave player move the camera
                     playerCam.enabled = true;
                     //Leave player use weapon
@@ -176,6 +189,8 @@ public class LockerInteract : NetworkBehaviour
                 {
                     headbob.enable = false;
                     playerNetwork.inLocker = true;
+                    dofVolume.gameObject.SetActive(false);
+                    dof.enabled = false;
                     //Turn off camera moving
                     playerCam.enabled = false;
                     //Turn off player weapon

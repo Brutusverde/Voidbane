@@ -37,9 +37,20 @@ public class DynamicDOF : MonoBehaviour
             //testDoF.farFocusEnd.value = hitDist;
             testDoF.farFocusStart.value = Mathf.Lerp(testDoF.farFocusStart.value, hitDist, Time.deltaTime * focusSpeed);
 
-            testDoF.farFocusEnd.value = hitDist * 4f;
-            testDoF.nearFocusStart.value = hitDist / 15f;
-            testDoF.nearFocusEnd.value = hitDist /7f;
+            if(hitDist <= 10)
+            {
+                testDoF.farFocusEnd.value = hitDist * 4f;
+                testDoF.nearFocusStart.value = hitDist * 2f;
+                testDoF.nearFocusEnd.value = hitDist / 5f;
+            }
+            else
+            {
+                testDoF.farFocusEnd.value = hitDist * 4f;
+                testDoF.nearFocusStart.value = hitDist / 15f;
+                testDoF.nearFocusEnd.value = hitDist / 7f;
+            }
+
+            
 
             //testDoF.farFocusEnd.value = hitDist + 10f;
             //testDoF.nearFocusStart.value = hitDist - 25f;
