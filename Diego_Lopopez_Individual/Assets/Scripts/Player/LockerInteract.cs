@@ -20,7 +20,6 @@ public class LockerInteract : NetworkBehaviour
 
     //Player components
     public PlayerNetwork playerNetwork;
-    public GunNetwork gunNetwork;
     public Rigidbody rb;
 
     //Capsule components
@@ -60,8 +59,6 @@ public class LockerInteract : NetworkBehaviour
                             
                             //Leave player move the camera
                             playerCam.enabled = true;
-                            //Leave player use weapon
-                            gunNetwork.enabled = true;
                             //Return gravity to rb
                             rb.isKinematic = false;
                             //Return collider
@@ -82,8 +79,6 @@ public class LockerInteract : NetworkBehaviour
                             dof.enabled = false;
                             //Turn off camera moving
                             playerCam.enabled = false;
-                            //Turn off player weapon
-                            gunNetwork.enabled = false;
                             //Quit gravity from rb
                             rb.isKinematic = true;
                             //Turn off collider
@@ -109,8 +104,6 @@ public class LockerInteract : NetworkBehaviour
                             dof.enabled = true;
                             //Leave player move the camera
                             playerCam.enabled = true;
-                            //Leave player use weapon
-                            gunNetwork.enabled = true;
                             //Return gravity to rb
                             rb.isKinematic = false;
                             //Return collider
@@ -131,8 +124,6 @@ public class LockerInteract : NetworkBehaviour
                             dof.enabled = false;
                             //Turn off camera moving
                             playerCam.enabled = false;
-                            //Turn off player weapon
-                            gunNetwork.enabled = false;
                             //Quit gravity from rb
                             rb.isKinematic = true;
                             //Turn off collider
@@ -169,8 +160,6 @@ public class LockerInteract : NetworkBehaviour
                     dof.enabled = true;
                     //Leave player move the camera
                     playerCam.enabled = true;
-                    //Leave player use weapon
-                    gunNetwork.enabled = true;
                     //Return gravity to rb
                     rb.isKinematic = false;
                     //Return collider
@@ -193,8 +182,6 @@ public class LockerInteract : NetworkBehaviour
                     dof.enabled = false;
                     //Turn off camera moving
                     playerCam.enabled = false;
-                    //Turn off player weapon
-                    gunNetwork.enabled = false;
                     //Quit gravity from rb
                     rb.isKinematic = true;
                     //Turn off collider
