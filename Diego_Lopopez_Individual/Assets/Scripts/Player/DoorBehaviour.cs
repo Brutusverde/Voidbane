@@ -17,7 +17,7 @@ public class DoorBehaviour : NetworkBehaviour
     {
         currentAngle = transform.eulerAngles;
         doorOpen.Value = false;
-        forward = transform.forward;
+        forward = new Vector3(0, transform.position.y, 0);
         startPosition = transform.position;
         StartRotation = transform.rotation.eulerAngles;
     }
@@ -32,12 +32,12 @@ public class DoorBehaviour : NetworkBehaviour
         float dot = Vector3.Dot(forward, (UserPosition - transform.position).normalized);
         if(dot >= forwardDirection)
         {
-            endRotation = Quaternion.Euler(new Vector3(0, startRotation.y - 90, 0));
+            endRotation = Quaternion.Euler(new Vector3(0, startRotation.z - 45, 0));
             transform.rotation = endRotation;
         }
         else
         {
-            endRotation = Quaternion.Euler(new Vector3(0, startRotation.y + 90, 0));
+            endRotation = Quaternion.Euler(new Vector3(0, startRotation.z + 45, 0));
             transform.rotation = endRotation;
         }
     }
