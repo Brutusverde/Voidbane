@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2989132422334654571}
+  - component: {fileID: -8433331577672685006}
+  - component: {fileID: 5292267057432555036}
   m_Layer: 0
   m_Name: Lights_Right
   m_TagString: Untagged
@@ -33,6 +35,41 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-8433331577672685006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764927423389933599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 1
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 1
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+--- !u!114 &5292267057432555036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764927423389933599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346da936eab18d346b57df47c5edeb6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _light: {fileID: 6800441268727863958}
+  lightBase: {fileID: 8958727934865716858}
+  controller: {fileID: 0}
 --- !u!1 &3013623755457197077
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,6 +383,12 @@ PrefabInstance:
 --- !u!4 &7789229868219485461 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 35d83e13f4aaffd4bbe14415985c374f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7751361497760574206}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8958727934865716858 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 35d83e13f4aaffd4bbe14415985c374f,
     type: 3}
   m_PrefabInstance: {fileID: 7751361497760574206}
   m_PrefabAsset: {fileID: 0}

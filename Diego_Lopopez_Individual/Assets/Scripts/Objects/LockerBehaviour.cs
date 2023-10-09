@@ -13,6 +13,7 @@ public class LockerBehaviour : NetworkBehaviour
     // Start is called before the first frame update
     public override void OnNetworkSpawn()
     {
+        base.OnNetworkSpawn();
         LockerFull.Value = false;
     }
 }

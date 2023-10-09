@@ -8,11 +8,16 @@ public class GenBehaviour : NetworkBehaviour
     public NetworkVariable<bool> hasFuel = new NetworkVariable<bool>();
     public LightController lightController;
 
-    private void Start()
+    public override void OnNetworkSpawn()
     {
+        base.OnNetworkSpawn();
+
         lightController = GameObject.Find("GameController").GetComponent<LightController>();
+        if (!IsHost) return;
         hasFuel.Value = true;
+        lightController.StartTimerServerRPC();
     }
+
 }
 
 
