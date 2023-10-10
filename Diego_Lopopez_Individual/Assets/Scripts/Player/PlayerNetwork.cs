@@ -157,11 +157,11 @@ public class PlayerNetwork : NetworkBehaviour
 
         if (grounded)
         {
-            rb.AddForce(moveDirection.normalized * speed * 10, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * speed * 1000 * Time.deltaTime, ForceMode.Force);
         }
         else if (!grounded)
         {
-            rb.AddForce(moveDirection.normalized * speed * 10 * airMultiplier, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * speed * 1000 * Time.deltaTime * airMultiplier, ForceMode.Force);
         }
     }
 
