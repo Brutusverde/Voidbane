@@ -9,5 +9,4 @@ public class PlayerOptions : ScriptableObject
     public bool Bloom;
     public bool AO;
     public bool Fog;
-
 }
