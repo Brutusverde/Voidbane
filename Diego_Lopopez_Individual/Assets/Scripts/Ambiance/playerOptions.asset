@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e33480920d2d8ae4fb46a12e5e0d653b, type: 3}
   m_Name: playerOptions
   m_EditorClassIdentifier: 
-  SSGI: 0
-  Bloom: 0
-  AO: 0
-  Fog: 0
+  SSGI: 1
+  Bloom: 1
+  AO: 1
+  Fog: 1
