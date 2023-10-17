@@ -9,11 +9,11 @@ public class MazeGenerator : MonoBehaviour
     public MazeCell mazeCellPrefab;
     public int mazeWidth;
     public int mazeDepth;
-    public float cellWidth;
-    public float cellDepth;
+    public int cellWidth;
+    public int cellDepth;
 
     private MazeCell[,] mazeGrid;
-
+    
 
 
     void Start()
@@ -24,7 +24,19 @@ public class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < mazeWidth; z++)
             {
-                mazeGrid[x, z] = Instantiate(mazeCellPrefab, new Vector3(x * cellWidth, -2.3f, z * cellDepth), Quaternion.identity);
+                var cell = Instantiate(mazeCellPrefab, new Vector3(x * cellWidth, -2.3f, z * cellDepth), Quaternion.identity);
+                mazeGrid[x, z] = cell;
+
+                if (x == 0 && z == 0)
+                {
+                    cell.FirstCell();
+                }
+
+
+                if (x == mazeWidth - 1 && z == mazeDepth - 1)
+                {
+                    cell.LastCell();
+                }
             }
         }
 
@@ -45,8 +57,16 @@ public class MazeGenerator : MonoBehaviour
             {
                 GenerateMaze(currentCell, nextCell);
             }
-        } while (nextCell != null);
-        
+        } 
+        while (nextCell != null);
+
+        //if(nextCell == null)
+        //{
+        //    currentCell.LastCell();
+        //}
+
+
+
     }
 
     private MazeCell GetNextUnvisitedCell(MazeCell currentCell)
@@ -58,8 +78,8 @@ public class MazeGenerator : MonoBehaviour
 
     private IEnumerable<MazeCell> GetUnvisitedCells(MazeCell currentCell)
     {
-        int x = (int)currentCell.transform.position.x;
-        int z = (int)currentCell.transform.position.z;
+        int x = (int)currentCell.transform.position.x / (int)cellWidth;
+        int z = (int)currentCell.transform.position.z / (int)cellDepth;
 
         if(x + 1  < mazeWidth)
         {
@@ -99,11 +119,6 @@ public class MazeGenerator : MonoBehaviour
                 Debug.Log(4);
                 yield return cellToBack;
             }
-        }
-
-        if (z == mazeWidth)
-        {
-            currentCell.LastCell();
         }
     } 
 

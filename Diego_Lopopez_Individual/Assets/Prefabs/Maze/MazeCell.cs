@@ -14,6 +14,8 @@ public class MazeCell : MonoBehaviour
 
     public GameObject unvisitedBlock;
 
+    public GameObject first;
+
     public GameObject last;
 
     public bool isVisited { get; private set; }
@@ -44,6 +46,11 @@ public class MazeCell : MonoBehaviour
     public void ClearBackWall()
     {
         backWall.SetActive(false);
+    }
+
+    public void FirstCell()
+    {
+        first.SetActive(true);
     }
 
     public void LastCell()
