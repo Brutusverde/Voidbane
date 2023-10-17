@@ -2,22 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Unity.Netcode;
+using Unity.AI.Navigation;
+using UnityEngine.AI;
 
-public class MazeGenerator : MonoBehaviour
+public class MazeGenerator : NetworkBehaviour
 {
-
+    //Maze generator
     public MazeCell mazeCellPrefab;
     public int mazeWidth;
     public int mazeDepth;
     public int cellWidth;
     public int cellDepth;
 
+    public bool useSeed;
+
+    public int seedVar;
+    public NetworkVariable<int> seed = new NetworkVariable<int>();
+
     private MazeCell[,] mazeGrid;
-    
+
+    //Maze path visualization
+    public Transform startPoint;
+    public Transform endPoint;
+
+    public LineRenderer Path;
+    public NavMeshTriangulation Triangulation;
+    public Coroutine DrawPathCoroutine;
+
+    public float pathHeighOffset;
+    public float pathUpdateSpeed;
 
 
-    void Start()
+
+
+    public override void OnNetworkSpawn()
     {
+        if (IsServer)
+        {
+            seedVar = Random.Range(1, 1000000);
+            Random.InitState(seedVar);
+            seed.Value = seedVar;
+            Debug.Log("Server created seed " + seedVar);
+        }
+        if (!IsServer)
+        {
+            Random.InitState(seed.Value);
+            Debug.Log("Client created seed " + seed.Value);
+        }
+
+        
+       
+
         mazeGrid = new MazeCell[mazeWidth, mazeDepth];
 
         for (int x = 0; x < mazeWidth; x++)
@@ -30,17 +66,27 @@ public class MazeGenerator : MonoBehaviour
                 if (x == 0 && z == 0)
                 {
                     cell.FirstCell();
+                    startPoint.position = cell.locationPoint.position;
                 }
-
 
                 if (x == mazeWidth - 1 && z == mazeDepth - 1)
                 {
                     cell.LastCell();
+                    endPoint.position = cell.locationPoint.position;
                 }
             }
         }
 
         GenerateMaze(null, mazeGrid[0, 0]);
+        NavMeshSurface nav = GetComponent<NavMeshSurface>();
+        nav.BuildNavMesh();
+
+        if(DrawPathCoroutine != null)
+        {
+            StopCoroutine(DrawPathCoroutine);
+        }
+
+        DrawPathCoroutine = StartCoroutine(DrawPath());
     }
 
     private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
@@ -59,14 +105,6 @@ public class MazeGenerator : MonoBehaviour
             }
         } 
         while (nextCell != null);
-
-        //if(nextCell == null)
-        //{
-        //    currentCell.LastCell();
-        //}
-
-
-
     }
 
     private MazeCell GetNextUnvisitedCell(MazeCell currentCell)
@@ -86,7 +124,6 @@ public class MazeGenerator : MonoBehaviour
             var cellToRight = mazeGrid[x + 1, z];
             if(cellToRight.isVisited == false)
             {
-                Debug.Log(1);
                 yield return cellToRight;
             }
         }
@@ -96,7 +133,6 @@ public class MazeGenerator : MonoBehaviour
             var cellToLeft = mazeGrid[x - 1, z];
             if (cellToLeft.isVisited == false)
             {
-                Debug.Log(2);
                 yield return cellToLeft;
             }
         }
@@ -106,7 +142,6 @@ public class MazeGenerator : MonoBehaviour
             var cellToFront = mazeGrid[x, z + 1];
             if (cellToFront.isVisited == false)
             {
-                Debug.Log(3);
                 yield return cellToFront;
             }
         }
@@ -116,13 +151,12 @@ public class MazeGenerator : MonoBehaviour
             var cellToBack = mazeGrid[x, z - 1];
             if (cellToBack.isVisited == false)
             {
-                Debug.Log(4);
                 yield return cellToBack;
             }
         }
-    } 
+    }
 
-    void ClearWalls(MazeCell previousCell, MazeCell currentCell)
+    private void ClearWalls(MazeCell previousCell, MazeCell currentCell)
     {
         if(previousCell == null)
         {
@@ -158,4 +192,33 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
+    public IEnumerator DrawPath()
+    {
+        //yield return new WaitForSeconds(0);
+        
+        WaitForSeconds Wait = new WaitForSeconds(pathUpdateSpeed);
+        NavMeshPath path = new NavMeshPath();
+
+        while(startPoint && endPoint)
+        {
+            Triangulation = NavMesh.CalculateTriangulation();
+            
+            if (NavMesh.CalculatePath(startPoint.position, endPoint.position, NavMesh.AllAreas, path))
+            {
+                Path.positionCount = path.corners.Length;
+                for(int i = 0; i < path.corners.Length; i++)
+                {
+                    Path.SetPosition(i, path.corners[i] + Vector3.up * pathHeighOffset);
+                    Debug.Log("Working");
+                }
+            }
+            else
+            {
+                Debug.Log("Upsi");
+            }
+            yield return Wait;
+        }
+
+        
+    }
 }

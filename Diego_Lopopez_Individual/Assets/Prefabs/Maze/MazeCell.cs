@@ -18,9 +18,9 @@ public class MazeCell : MonoBehaviour
 
     public GameObject last;
 
+    public Transform locationPoint;
+
     public bool isVisited { get; private set; }
-
-
 
     public void Visit()
     {
