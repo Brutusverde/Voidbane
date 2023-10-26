@@ -21,6 +21,7 @@ public class Interact : NetworkBehaviour
         }
     }
 
+    #region Gen interaction
 
     void InteractWithGen()
     {
@@ -46,9 +47,9 @@ public class Interact : NetworkBehaviour
         }
     }
 
+    #endregion
 
-
-
+    #region Oil interaction
 
     void InteractWithOil()
     {
@@ -57,6 +58,12 @@ public class Interact : NetworkBehaviour
         {
             Debug.Log(hit);
             InteractWithOilServerRPC(cam.transform.forward);
+            OilSpillBehaviour oil = hit.transform.GetComponent<OilSpillBehaviour>();
+
+            if (oil)
+            {
+                oil.turnOnFire.Value = true;
+            }
         }
     }
 
@@ -68,10 +75,13 @@ public class Interact : NetworkBehaviour
         {
             Debug.Log(hit);
             OilSpillBehaviour oil = hit.transform.GetComponent<OilSpillBehaviour>();
+
             if (oil)
             {
-                oil.fireOn();
+                oil.turnOnFire.Value = true;
             }
         }
     }
+     
+    #endregion
 }
