@@ -15,7 +15,7 @@ public class DoorInteract : NetworkBehaviour
             RaycastHit hit;
             if(Physics.Raycast(cam.position, cam.forward, out hit, 20f))
             {
-                Debug.Log(hit.transform.name);
+                //Debug.Log(hit.transform.name);
                 DoorBehaviour Door = hit.transform.GetComponentInParent<DoorBehaviour>();
                 if (!Door) return;
 

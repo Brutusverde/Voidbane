@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-public class GenInteract : NetworkBehaviour
+public class Interact : NetworkBehaviour
 {
     public Camera cam;
     public float maxDist;
@@ -14,7 +14,13 @@ public class GenInteract : NetworkBehaviour
         {
             InteractWithGen();
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            InteractWithOil();
+        }
     }
+
 
     void InteractWithGen()
     {
@@ -40,4 +46,32 @@ public class GenInteract : NetworkBehaviour
         }
     }
 
+
+
+
+
+    void InteractWithOil()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDist))
+        {
+            Debug.Log(hit);
+            InteractWithOilServerRPC(cam.transform.forward);
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void InteractWithOilServerRPC(Vector3 rotation)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(cam.transform.position, rotation, out hit, maxDist))
+        {
+            Debug.Log(hit);
+            OilSpillBehaviour oil = hit.transform.GetComponent<OilSpillBehaviour>();
+            if (oil)
+            {
+                oil.fireOn();
+            }
+        }
+    }
 }
