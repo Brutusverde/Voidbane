@@ -5,11 +5,8 @@ using UnityEngine;
 public class MazeCell : MonoBehaviour
 {
     public GameObject leftWall;
-
     public GameObject rightWall;
-
     public GameObject frontWall;
-
     public GameObject backWall;
 
     public GameObject unvisitedBlock;
@@ -19,6 +16,11 @@ public class MazeCell : MonoBehaviour
     public GameObject last;
 
     public Transform locationPoint;
+
+    public GameObject leftBlock;
+    public GameObject rightBlock;
+    public GameObject frontBlock;
+    public GameObject backBlock;
 
     public bool isVisited { get; private set; }
 
