@@ -7,12 +7,14 @@ public class Interact : NetworkBehaviour
 {
     public Camera cam;
     public float maxDist;
+    private Item item;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
             InteractWithGen();
+            InteractWithObject();
         }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -82,6 +84,24 @@ public class Interact : NetworkBehaviour
             }
         }
     }
-     
+
     #endregion
+
+
+    void InteractWithObject()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDist))
+        {
+
+            item = hit.transform.GetComponent<ObjectInteract>().item;
+            bool canAdd = InventoryManager.instance.CheckForSpace(item);
+            if (canAdd)
+            {
+                item = hit.transform.GetComponent<ObjectInteract>().item;
+                hit.transform.GetComponent<ObjectInteract>().InteractWithObject();
+                InventoryManager.instance.AddItem(item);
+            }
+        }
+    }
 }
