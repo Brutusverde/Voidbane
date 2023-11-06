@@ -11,10 +11,14 @@ public class PauseMenuController : NetworkBehaviour
     public PlayerOptions options;
     public PlayerCam cam;
 
-    [SerializeField]
-    private Toggle SSGI_Toggle;
+    //[SerializeField] private Toggle SSGI_Toggle;
 
-    // Start is called before the first frame update
+    public Button button;
+
+    public Color color1;
+    public Color color2;
+
+
     public override void OnNetworkSpawn()
     {
         CloseMenu();
@@ -56,15 +60,23 @@ public class PauseMenuController : NetworkBehaviour
 
     ///////////////////////////////////////////Comportamiento de los botones
 
+    public void close()
+    {
+        Application.Quit();
+    }
+
+
     public void togleSSGI()
     {
         if(options.SSGI == true)
         {
             options.SSGI = false;
+            checkState();
         }
         else
         {
             options.SSGI = true;
+            checkState();
         }
     }
 
@@ -72,11 +84,11 @@ public class PauseMenuController : NetworkBehaviour
     {
         if (options.SSGI == true)
         {
-            SSGI_Toggle.isOn = true;
+            button.GetComponent<Image>().color = color1;
         }
-        else
+        if (options.SSGI == false)
         {
-            SSGI_Toggle.isOn = false;
+            button.GetComponent<Image>().color = color2;
         }
     }
 

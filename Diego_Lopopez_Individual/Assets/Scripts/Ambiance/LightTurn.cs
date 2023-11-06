@@ -11,15 +11,17 @@ public class LightTurn : NetworkBehaviour
     public Light _light;
     public MeshRenderer  lightBase;
     public LightController controller;
-    //public ReflectionProbe probe;
-    public GameObject volume;
-    public Color emissiveColor = new Color(255, 249, 239, 255);
+    public Material materialOn;
+    public Material materialOff;
+    private GameObject volume;
+    private Material[] matArray;
+
 
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
         volume = GameObject.Find("FogDarkness");
-        emissiveColor = new Color(255, 249, 239, 255);
+        matArray = lightBase.materials;
     }
 
     private void Update()
@@ -29,16 +31,19 @@ public class LightTurn : NetworkBehaviour
         if (controller.CountDown.Value <= 0)
         {
             _light.intensity = 0;
-            lightBase.materials[2].SetColor("_EmissiveColor", emissiveColor * controller.emissiveIntensity.Value);
             if (!volume) return;
             volume.transform.gameObject.SetActive(true);
+
+            matArray[2] = materialOff;
+            lightBase.materials = matArray;
         }
         else
         {
             _light.intensity = controller.lightInt.Value;
-            lightBase.materials[2].SetColor("_EmissiveColor", emissiveColor * controller.emissiveIntensity.Value);
             if (!volume) return;
             volume.transform.gameObject.SetActive(false);
+            matArray[2] = materialOn;
+            lightBase.materials = matArray;
         }
     }
 }

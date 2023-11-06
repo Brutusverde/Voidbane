@@ -35,7 +35,6 @@ public class LightController : NetworkBehaviour
 
 
 
-
     public NetworkVariable<float> lightInt = new NetworkVariable<float>();
     public NetworkVariable<float> emissiveOn = new NetworkVariable<float>();
     public NetworkVariable<float> emissiveIntensity = new NetworkVariable<float>();
@@ -69,14 +68,14 @@ public class LightController : NetworkBehaviour
             {
                 gen.hasFuel.Value = false;
                 CountDown.Value -= 1 * Time.deltaTime;
-                text.text = CountDown.Value.ToString();
+                var roundCountDown = Mathf.Round(CountDown.Value);
+                text.text = roundCountDown.ToString();
             }
             
             
             //If the timer has finished, this turns off the lights
             if(CountDown.Value <= 0)
             {
-
                 turnOffLightsServerRPC();
                 if (!IsHost) return;
                 countDownStarted.Value = false;

@@ -12,6 +12,8 @@ public class OilSpillBehaviour : NetworkBehaviour
     public bool givingDamage;
     public NetworkVariable<bool> turnOnFire = new NetworkVariable<bool>();
 
+    private Coroutine co;
+
 
     // Start is called before the first frame update
     void Start()
@@ -45,13 +47,31 @@ public class OilSpillBehaviour : NetworkBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!isOnFire) return;
-
-        Debug.Log("MmM");
-
         if (other.CompareTag("Player"))
         {
-            Debug.Log("aaaaa");
-            other.GetComponentInParent<PlayerNetwork>().HealthPoint.Value -= damage;
+            givingDamage = true;
+            co = StartCoroutine(DamagePlayer(other.GetComponentInParent<PlayerNetwork>()));
+            //other.GetComponentInParent<PlayerNetwork>().HealthPoint.Value -= damage;
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            givingDamage = false;
+        }
+    }
+
+
+    private IEnumerator DamagePlayer(PlayerNetwork pn)
+    {
+        while (givingDamage)
+        {
+            yield return new WaitForSeconds(0.1f);
+            pn.HealthPoint.Value -= damage;
+        }
+
+        StopCoroutine(co);
     }
 }

@@ -72,6 +72,8 @@ MonoBehaviour:
   controller: {fileID: 0}
   volume: {fileID: 0}
   emissiveColor: {r: 255, g: 249, b: 239, a: 255}
+  materialOn: {fileID: 2100000, guid: 92c9ce581486e9e42b431f67c242728c, type: 2}
+  materialOff: {fileID: 2100000, guid: e7c724b4fa6caf3468976f116cd5525e, type: 2}
 --- !u!1 &3013623755457197077
 GameObject:
   m_ObjectHideFlags: 0
