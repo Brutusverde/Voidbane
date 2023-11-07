@@ -87,7 +87,7 @@ public class LightController : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void StartTimerServerRPC()
     {
-        if (countDownStarted.Value == true || gen.hasFuel.Value == false) return;
+        if (/*countDownStarted.Value == true ||*/ gen.hasFuel.Value == false) return;
         turnOnLightsServerRPC();
         CountDown.Value = countDownFull;
         countDownStarted.Value = true;

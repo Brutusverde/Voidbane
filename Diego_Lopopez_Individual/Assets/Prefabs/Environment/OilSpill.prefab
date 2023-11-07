@@ -271,6 +271,7 @@ MonoBehaviour:
   givingDamage: 0
   turnOnFire:
     m_InternalValue: 0
+  item: {fileID: 11400000, guid: 46f51d3fcbd5ac847b36f412eecb2d35, type: 2}
 --- !u!114 &3999908768319455716
 MonoBehaviour:
   m_ObjectHideFlags: 0

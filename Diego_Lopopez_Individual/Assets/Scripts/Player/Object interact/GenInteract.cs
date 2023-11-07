@@ -7,6 +7,7 @@ public class GenInteract : NetworkBehaviour
 {
     public Camera cam;
     public float maxDist;
+    public Item fuelItem;
 
     private void Update()
     {

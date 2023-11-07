@@ -11,6 +11,7 @@ public class OilSpillBehaviour : NetworkBehaviour
     public int damage;
     public bool givingDamage;
     public NetworkVariable<bool> turnOnFire = new NetworkVariable<bool>();
+    public Item item;
 
     private Coroutine co;
 
