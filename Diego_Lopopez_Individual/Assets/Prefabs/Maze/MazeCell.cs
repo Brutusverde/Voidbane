@@ -17,10 +17,10 @@ public class MazeCell : MonoBehaviour
 
     public Transform locationPoint;
 
-    public GameObject leftBlock;
-    public GameObject rightBlock;
-    public GameObject frontBlock;
-    public GameObject backBlock;
+    public GameObject leftFloor;
+    public GameObject rightFloor;
+    public GameObject frontFloor;
+    public GameObject backFloor;
 
     public bool isVisited { get; private set; }
 
@@ -30,25 +30,33 @@ public class MazeCell : MonoBehaviour
         unvisitedBlock.SetActive(false);
     }
 
+
+    #region Clear walls and floors
     public void ClearLeftWall()
     {
         leftWall.SetActive(false);
+        leftFloor.SetActive(false);
     }
 
     public void ClearRightWall()
     {
         rightWall.SetActive(false);
+        rightFloor.SetActive(false);
     }
 
     public void ClearFrontWall()
     {
         frontWall.SetActive(false);
+        frontFloor.SetActive(false);
     }
 
     public void ClearBackWall()
     {
         backWall.SetActive(false);
+        backFloor.SetActive(false);
     }
+    #endregion
+
 
     public void FirstCell()
     {

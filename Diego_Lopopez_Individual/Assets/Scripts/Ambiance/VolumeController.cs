@@ -15,12 +15,14 @@ public class VolumeController : MonoBehaviour
     private Bloom bloom;
     private ScreenSpaceAmbientOcclusion AO;
     private Fog fog;
+    private ScreenSpaceReflection SSR;
 
 
     public bool SSGI_Active;
     public bool bloom_Active;
     public bool AO_Active;
     public bool fog_Active;
+    public bool SSR_Active;
 
 
     // Start is called before the first frame update
@@ -30,6 +32,8 @@ public class VolumeController : MonoBehaviour
         volume.profile.TryGet<Bloom>(out bloom);
         volume.profile.TryGet<ScreenSpaceAmbientOcclusion>(out AO);
         volume.profile.TryGet<Fog>(out fog);
+        volume.profile.TryGet<ScreenSpaceReflection>(out SSR);
+
     }
 
     // Update is called once per frame
@@ -85,6 +89,19 @@ public class VolumeController : MonoBehaviour
         if (fog_Active == false)
         {
             fog.active = false;
+        }
+
+        //SSR
+        SSR_Active = playerOptions.SSR;
+
+        if (SSR_Active == true)
+        {
+            SSR.active = true;
+        }
+
+        if (SSR_Active == false)
+        {
+            SSR.active = false;
         }
     }
 }

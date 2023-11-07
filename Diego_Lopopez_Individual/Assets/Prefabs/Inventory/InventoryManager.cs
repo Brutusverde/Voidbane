@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
+    public PlayerCam cam;
     public static InventoryManager instance;
-
+    public PauseMenuController pauseMenuController;
     public Item[] startItems;
 
+    private Item selectedItem;
+    private bool hasSelectedItem;
+
+
     public InventorySlot[] inventorySlots;
+    public InventorySlot inventorySlotShow;
     public GameObject inventoryItemPrefab;
     public int maxStack;
 
     int selectedSlot = -1;
+
+    public GameObject inventory;
+    public GameObject crossHair;
+
+    public bool openInventory;
 
 
     private void Awake()
@@ -22,6 +33,7 @@ public class InventoryManager : MonoBehaviour
 
     private void Start()
     {
+        CloseInventory();
         ChangeSelectedSlot(0);
         foreach (var item in startItems)
         {
@@ -35,11 +47,52 @@ public class InventoryManager : MonoBehaviour
         if(Input.inputString != null)
         {
             bool isNumber = int.TryParse(Input.inputString, out int number);
-            if(isNumber && number > 0 && number < 8)
+            if(isNumber && number > 0 && number < inventorySlots.Length + 1)
             {
                 ChangeSelectedSlot(number - 1);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (openInventory && pauseMenuController.menuIsOpen == false)
+            {
+                OpenInventory();
+            }
+            else
+            {
+                CloseInventory();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!openInventory && pauseMenuController.menuIsOpen == false)
+            {
+                CloseInventory();
+            }
+           
+        }
+    }
+
+    void OpenInventory()
+    {
+        inventory.SetActive(true);
+        crossHair.SetActive(false);
+        openInventory = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        cam.enabled = false;
+    }
+
+    void CloseInventory()
+    {
+        inventory.SetActive(false);
+        crossHair.SetActive(true);
+        openInventory = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        cam.enabled = true;
     }
 
 
@@ -52,6 +105,12 @@ public class InventoryManager : MonoBehaviour
         
         inventorySlots[newValue].Select();
         selectedSlot = newValue;
+        InventoryItem inventoryItem = inventorySlots[newValue].GetComponentInChildren<InventoryItem>();
+        if (inventoryItem)
+        {
+            selectedItem = inventorySlots[newValue].GetComponentInChildren<InventoryItem>().item;
+            SelectedObject(selectedItem, inventorySlotShow);
+        }
     }
 
     public bool AddItem(Item item)
@@ -62,6 +121,7 @@ public class InventoryManager : MonoBehaviour
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
             if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < maxStack && itemInSlot.item.stackable == true)
             {
+
                 itemInSlot.count++;
                 itemInSlot.RefreshCount();
                 return true;
@@ -77,6 +137,12 @@ public class InventoryManager : MonoBehaviour
             if(itemInSlot == null)
             {
                 SpawnNewItem(item, slot);
+                if (hasSelectedItem == false)
+                {
+                    SelectedObject(item, inventorySlots[i]);
+                    hasSelectedItem = true;
+                }
+                
                 return true;
             }
         }
@@ -130,6 +196,17 @@ public class InventoryManager : MonoBehaviour
     }
 
 
+    void SelectedObject(Item item, InventorySlot slot)
+    {
+        InventoryItem inventoryItem1 = inventorySlotShow.GetComponentInChildren<InventoryItem>();
+        if (inventoryItem1)
+        {
+            Destroy(inventorySlotShow.GetComponentInChildren<InventoryItem>().gameObject);
+        }
+        GameObject newItemGo = Instantiate(inventoryItemPrefab, inventorySlotShow.transform);
+        InventoryItem inventoryItem = newItemGo.GetComponent<InventoryItem>();
+        inventoryItem.InitialiseItem(item);
+    }
 
 
     void SpawnNewItem(Item item, InventorySlot slot)
@@ -152,6 +229,8 @@ public class InventoryManager : MonoBehaviour
                 if(itemInSlot.count <= 0)
                 {
                     Destroy(itemInSlot.gameObject);
+                    Destroy(inventorySlotShow.GetComponentInChildren<InventoryItem>().gameObject);
+                    hasSelectedItem = false;
                 }
                 else
                 {

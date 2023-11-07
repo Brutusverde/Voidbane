@@ -10,12 +10,17 @@ public class PlayerNetwork : NetworkBehaviour
     public float sprintSpeed;
     public float speed;
 
+    public float waterSpeed;
+    public float waterSprintSpeed;
+
     public float groundDrag;
 
     [Header("Ground check")]
     private float playerHeight = 2;
     public LayerMask whatIsGround;
     public bool grounded;
+    public LayerMask whatIsWater;
+    public bool watered;
 
     public Transform orientation;
     float horizontalInput;
@@ -69,7 +74,16 @@ public class PlayerNetwork : NetworkBehaviour
         if (inLocker) return;
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        if(Input.GetKey(jumpkey) && readyToJump && grounded)
+
+        if (Input.GetKey(jumpkey) && readyToJump && watered)
+        {
+            readyToJump = false;
+            Jump();
+            Invoke(nameof(ResetJump), jumpCoolDown);
+        }
+
+
+        if (Input.GetKey(jumpkey) && readyToJump && grounded)
         {
             readyToJump = false;
             Jump();
@@ -83,6 +97,22 @@ public class PlayerNetwork : NetworkBehaviour
                 speed = sprintSpeed;
                 isRuning = true;
             }    
+        }
+
+
+        if (Input.GetKeyDown(sprintKey) && watered)
+        {
+            if (rb.velocity != new Vector3(0, 0, 0) && StaminaPoint.Value > 0)
+            {
+                speed = waterSprintSpeed;
+                isRuning = true;
+            }
+        }
+
+        if (Input.GetKeyUp(sprintKey) && watered || StaminaPoint.Value <= 0 && watered)
+        {
+            isRuning = false;
+            speed = waterSpeed;
         }
 
         if (Input.GetKeyUp(sprintKey) || StaminaPoint.Value <= 0)
@@ -132,6 +162,7 @@ public class PlayerNetwork : NetworkBehaviour
         }
 
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
+        watered = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsWater);
 
         if (grounded)
         {
@@ -153,9 +184,12 @@ public class PlayerNetwork : NetworkBehaviour
         if (!IsOwner) return;
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        
+        if (watered)
+        {
+            rb.AddForce(moveDirection.normalized * waterSpeed * 1000 * Time.deltaTime, ForceMode.Force);
+        }
 
-        if (grounded)
+        else if (grounded)
         {
             rb.AddForce(moveDirection.normalized * speed * 1000 * Time.deltaTime, ForceMode.Force);
         }
