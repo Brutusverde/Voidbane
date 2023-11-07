@@ -2,29 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 public class Interact : NetworkBehaviour
 {
+    [Header("General Settings")]
+
     public Camera cam;
     public float maxDist;
     private Item item;
+
+    [Header("Locker interaction")]
+
+    //Cam components
+    public PlayerCam playerCam;
+    public Transform cameraHolder;
+    public Headbob headbob;
+    public DynamicDOF dof;
+    public Volume dofVolume;
+
+    //Player components
+    public PlayerNetwork playerNetwork;
+    public Rigidbody rb;
+
+    //Capsule components
+    public CapsuleCollider capsuleCollider;
+    public Animator animator;
+
+
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
             InteractWithGen();
-        }
-
-        if (Input.GetKeyDown(KeyCode.G))
-        {
             InteractWithObject();
+            InteractWithOil();
+            InteractWithLocker();
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            InteractWithOil();
-        }
     }
 
     #region Gen interaction
@@ -38,10 +55,12 @@ public class Interact : NetworkBehaviour
             if (gen)
             {
                 GenBehaviour genBehaviour = gen.GetComponent<GenBehaviour>();
-                
-                bool canUse = InventoryManager.instance.CheckForItem(item);
+
+                Item itemSelected = InventoryManager.instance.GetSelectedItem(false);
+
+                bool canUse = InventoryManager.instance.CheckForItem(itemSelected);
                 Debug.Log(canUse);
-                if (canUse && item == genBehaviour.fuelItem && genBehaviour.hasFuel.Value == false)
+                if (canUse && itemSelected == genBehaviour.fuelItem && genBehaviour.hasFuel.Value == false)
                 {
                     Debug.Log("HAsta aqui llegamos");
                     Item receivedItem = InventoryManager.instance.GetSelectedItem(true);
@@ -77,18 +96,19 @@ public class Interact : NetworkBehaviour
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDist))
         {
             OilSpillBehaviour oil = hit.transform.GetComponent<OilSpillBehaviour>();
-            bool canUse = InventoryManager.instance.CheckForItem(item);
-            Debug.Log(canUse);
-            if (canUse && item == oil.item && oil.isOnFire == false)
+            if (oil)
             {
-                Item receivedItem = InventoryManager.instance.GetSelectedItem(true);
-                InteractWithOilServerRPC(cam.transform.forward);
-                if (oil)
+                Item itemSelected = InventoryManager.instance.GetSelectedItem(false);
+
+                bool canUse = InventoryManager.instance.CheckForItem(itemSelected);
+                if (canUse && itemSelected == oil.item && oil.isOnFire == false)
                 {
+                    Item receivedItem = InventoryManager.instance.GetSelectedItem(true);
+                    InteractWithOilServerRPC(cam.transform.forward);
                     oil.turnOnFire.Value = true;
+
                 }
-            }
-            
+            }   
         }
     }
 
@@ -98,13 +118,8 @@ public class Interact : NetworkBehaviour
         RaycastHit hit;
         if (Physics.Raycast(cam.transform.position, rotation, out hit, maxDist))
         {
-            Debug.Log(hit);
             OilSpillBehaviour oil = hit.transform.GetComponent<OilSpillBehaviour>();
-
-            if (oil)
-            {
-                oil.turnOnFire.Value = true;
-            }
+            oil.turnOnFire.Value = true;
         }
     }
 
@@ -116,19 +131,192 @@ public class Interact : NetworkBehaviour
         RaycastHit hit;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDist))
         {
-
-            item = hit.transform.GetComponent<ObjectInteract>().item;
-            if (item)
+            ObjectInteract tryItem = hit.transform.GetComponent<ObjectInteract>();
+            if (tryItem)
             {
+                item = hit.transform.GetComponent<ObjectInteract>().item;
+                
                 bool canAdd = InventoryManager.instance.CheckForSpace(item);
                 if (canAdd)
                 {
                     item = hit.transform.GetComponent<ObjectInteract>().item;
                     hit.transform.GetComponent<ObjectInteract>().InteractWithObject();
                     InventoryManager.instance.AddItem(item);
-                }
-            }   
+                } 
+            }  
         }
     }
+    #endregion
+
+    #region Locker interaction
+    public void InteractWithLocker()
+    {
+        if (!IsOwner) return;
+
+        //Input for locker interaction
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDist))
+            {
+                if (hit.transform.GetComponent<LockerBehaviour>())
+                {
+                    lockerServerRPC(cam.transform.forward);
+                    LockerBehaviour locker = hit.transform.GetComponent<LockerBehaviour>();
+
+                    //This is for visuals on clients side
+
+                    //If you are the host
+                    if (IsHost)
+                    {
+                        //Locker is full, put player outside
+                        if (locker.LockerFull.Value == false)
+                        {
+                            headbob.enable = true;
+                            playerNetwork.inLocker = false;
+                            playerNetwork.speed = 2;
+                            dofVolume.gameObject.SetActive(true);
+                            dof.enabled = true;
+
+                            //Leave player move the camera
+                            playerCam.enabled = true;
+                            //Return gravity to rb
+                            rb.isKinematic = false;
+                            //Return collider
+                            capsuleCollider.isTrigger = false;
+                            //Play animation
+                            animator.SetBool("TurnOff", false);
+                            //Move camera to player body
+                            cam.transform.SetPositionAndRotation(cameraHolder.position, cameraHolder.rotation);
+
+                        }
+
+                        //Locker is empty, put player inside
+                        if (locker.LockerFull.Value == true)
+                        {
+                            headbob.enable = false;
+                            playerNetwork.inLocker = true;
+                            dofVolume.gameObject.SetActive(false);
+                            dof.enabled = false;
+                            //Turn off camera moving
+                            playerCam.enabled = false;
+                            //Quit gravity from rb
+                            rb.isKinematic = true;
+                            //Turn off collider
+                            capsuleCollider.isTrigger = true;
+                            //Play animation
+                            animator.SetBool("TurnOff", true);
+                            //Move camera to player body
+                            cam.transform.SetPositionAndRotation(locker.cameraPoint.position, locker.cameraPoint.rotation);
+
+                        }
+                    }
+
+                    //If you are the client
+                    if (!IsHost)
+                    {
+                        //Locker is full, put player outside
+                        if (locker.LockerFull.Value == true)
+                        {
+                            headbob.enable = true;
+                            playerNetwork.inLocker = false;
+                            playerNetwork.speed = 2;
+                            dofVolume.gameObject.SetActive(true);
+                            dof.enabled = true;
+                            //Leave player move the camera
+                            playerCam.enabled = true;
+                            //Return gravity to rb
+                            rb.isKinematic = false;
+                            //Return collider
+                            capsuleCollider.isTrigger = false;
+                            //Play animation
+                            animator.SetBool("TurnOff", false);
+                            //Move camera to player body
+                            cam.transform.SetPositionAndRotation(cameraHolder.position, cameraHolder.rotation);
+
+                        }
+
+                        //Locker is empty, put player inside
+                        if (locker.LockerFull.Value == false)
+                        {
+                            headbob.enable = false;
+                            playerNetwork.inLocker = true;
+                            dofVolume.gameObject.SetActive(false);
+                            dof.enabled = false;
+                            //Turn off camera moving
+                            playerCam.enabled = false;
+                            //Quit gravity from rb
+                            rb.isKinematic = true;
+                            //Turn off collider
+                            capsuleCollider.isTrigger = true;
+                            //Play animation
+                            animator.SetBool("TurnOff", true);
+                            //Move camera to player body
+                            cam.transform.SetPositionAndRotation(locker.cameraPoint.position, locker.cameraPoint.rotation);
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    //Server RPC for locker 
+    [ServerRpc(RequireOwnership = false)]
+    private void lockerServerRPC(Vector3 rotation)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(cam.transform.position, rotation, out hit, maxDist))
+        {
+            if (hit.transform.GetComponent<LockerBehaviour>())
+            {
+                //Locker is full, put player outside
+                LockerBehaviour locker = hit.transform.GetComponent<LockerBehaviour>();
+                if (locker.LockerFull.Value == true)
+                {
+                    headbob.enable = true;
+                    playerNetwork.inLocker = false;
+                    playerNetwork.speed = 2;
+                    dofVolume.gameObject.SetActive(true);
+                    dof.enabled = true;
+                    //Leave player move the camera
+                    playerCam.enabled = true;
+                    //Return gravity to rb
+                    rb.isKinematic = false;
+                    //Return collider
+                    capsuleCollider.isTrigger = false;
+                    //Play animation
+                    animator.SetBool("TurnOff", false);
+                    //Move camera to player body
+                    cam.transform.SetPositionAndRotation(cameraHolder.position, cameraHolder.rotation);
+                    locker.LockerFull.Value = false;
+
+                }
+
+
+                //Locker is empty, put player inside
+                else if (locker.LockerFull.Value == false)
+                {
+                    headbob.enable = false;
+                    playerNetwork.inLocker = true;
+                    dofVolume.gameObject.SetActive(false);
+                    dof.enabled = false;
+                    //Turn off camera moving
+                    playerCam.enabled = false;
+                    //Quit gravity from rb
+                    rb.isKinematic = true;
+                    //Turn off collider
+                    capsuleCollider.isTrigger = true;
+                    //Play animation
+                    animator.SetBool("TurnOff", true);
+                    //Move camera to player body
+                    cam.transform.SetPositionAndRotation(locker.cameraPoint.position, locker.cameraPoint.rotation);
+                    locker.LockerFull.Value = true;
+
+                }
+            }
+        }
+    }
+
     #endregion
 }
