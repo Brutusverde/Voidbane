@@ -30,6 +30,12 @@ public class Interact : NetworkBehaviour
     public CapsuleCollider capsuleCollider;
     public Animator animator;
 
+    [Header("Crosshair")]
+
+    public GameObject crosshair;
+    public Vector3 small;
+    public Vector3 big;
+
 
 
     private void Update()
@@ -40,9 +46,33 @@ public class Interact : NetworkBehaviour
             InteractWithObject();
             InteractWithOil();
             InteractWithLocker();
+            
         }
 
+        InteractWithCrosshair();
+
     }
+
+    private void InteractWithCrosshair()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDist))
+        {
+            GenBehaviour gen = hit.transform.GetComponent<GenBehaviour>();
+            OilSpillBehaviour oil = hit.transform.GetComponent<OilSpillBehaviour>();
+            ObjectInteract tryItem = hit.transform.GetComponent<ObjectInteract>();
+            LockerBehaviour locker = hit.transform.GetComponent<LockerBehaviour>();
+            if(gen || oil || tryItem || locker)
+            {
+                crosshair.transform.localScale = big;
+            }
+            else
+            {
+                crosshair.transform.localScale = small;
+            }
+        }
+    }
+
 
     #region Gen interaction
 

@@ -2823,6 +2823,9 @@ MonoBehaviour:
   rb: {fileID: 4180127371310354335}
   capsuleCollider: {fileID: 8543880219337551739}
   animator: {fileID: 4148089216697509300}
+  crosshair: {fileID: 8476686053244878667}
+  small: {x: 0.04, y: 0.04, z: 0.04}
+  big: {x: 0.1, y: 0.1, z: 0.1}
 --- !u!114 &8485523690047963417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7529,7 +7532,7 @@ RectTransform:
   m_GameObject: {fileID: 8476686053244878667}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
+  m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8955830693293122454}
