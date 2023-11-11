@@ -22,6 +22,9 @@ public class MazeCell : MonoBehaviour
     public GameObject frontFloor;
     public GameObject backFloor;
 
+
+    //public GameObject leftFloor;
+
     public bool isVisited { get; private set; }
 
     public void Visit()

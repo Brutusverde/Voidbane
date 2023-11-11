@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:Label tabindex="-1" text="General" display-tooltip-when-elided="true" name="General" style="-unity-text-align: upper-left; -unity-font-style: bold; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 5px; margin-bottom: 0; margin-top: 0;" />
+    <uie:ObjectField label="Prefab" name="Prefab" allow-scene-objects="false" type="UnityEngine.GameObject, UnityEngine.CoreModule" style="margin-left: 10px; margin-right: 10px; margin-top: 0; margin-bottom: 5px;" />
+    <uie:LayerMaskField label="Layer" name="Layer" style="margin-left: 10px; margin-right: 10px; margin-top: 0; margin-bottom: 0; color: rgb(255, 255, 255); visibility: visible; display: flex; overflow: hidden; opacity: 1;" />
+    <ui:Label tabindex="-1" text="Rotation" display-tooltip-when-elided="true" name="Rotation" style="-unity-text-align: upper-left; -unity-font-style: bold; padding-left: 10px; padding-right: 10px; padding-top: 20px; padding-bottom: 5px;" />
+    <ui:Vector3Field label="Min rotation" name="MinRotation" style="margin-left: 10px; margin-right: 10px; margin-top: 2px; margin-bottom: 2px;" />
+    <ui:Vector3Field label="Max rotation" name="MaxRotation" style="margin-left: 10px; margin-right: 10px; margin-top: 2px; margin-bottom: 2px;" />
+    <ui:Label tabindex="-1" text="Scale" display-tooltip-when-elided="true" name="Scale" style="-unity-text-align: upper-left; -unity-font-style: bold; padding-left: 10px; padding-right: 10px; padding-top: 20px; padding-bottom: 5px;" />
+    <ui:FloatField label="Min scale" value="42,2" name="MinScale" style="margin-left: 10px; margin-right: 10px; margin-top: 2px; margin-bottom: 2px;" />
+    <ui:FloatField label="Max scale" value="42,2" name="MaxScale" style="margin-left: 10px; margin-right: 10px; margin-top: 2px; margin-bottom: 2px;" />
+    <ui:Label tabindex="-1" text="Toggles" display-tooltip-when-elided="true" name="Toggles" style="-unity-text-align: upper-left; -unity-font-style: bold; padding-left: 10px; padding-right: 10px; padding-top: 20px; padding-bottom: 5px;" />
+    <ui:Toggle label="Active" name="Active" style="margin-left: 10px; margin-right: 10px; margin-top: 2px; margin-bottom: 2px;" />
+    <ui:Toggle label="Align to normals" name="AlignToNormals" style="margin-left: 10px; margin-right: 10px; margin-top: 2px; margin-bottom: 2px;" />
+</ui:UXML>
