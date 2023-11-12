@@ -33,7 +33,7 @@ Transform:
   - {fileID: 7789229868219485461}
   - {fileID: 2630411630170063115}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-8433331577672685006
 MonoBehaviour:
@@ -70,10 +70,9 @@ MonoBehaviour:
   _light: {fileID: 6800441268727863958}
   lightBase: {fileID: 8958727934865716858}
   controller: {fileID: 0}
-  volume: {fileID: 0}
-  emissiveColor: {r: 255, g: 249, b: 239, a: 255}
   materialOn: {fileID: 2100000, guid: 92c9ce581486e9e42b431f67c242728c, type: 2}
   materialOff: {fileID: 2100000, guid: e7c724b4fa6caf3468976f116cd5525e, type: 2}
+  lightController: {fileID: 11400000, guid: aacd30928c629044ca4e2d10313b7d59, type: 2}
 --- !u!1 &3013623755457197077
 GameObject:
   m_ObjectHideFlags: 0

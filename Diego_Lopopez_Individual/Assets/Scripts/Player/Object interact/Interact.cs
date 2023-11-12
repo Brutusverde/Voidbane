@@ -90,7 +90,7 @@ public class Interact : NetworkBehaviour
 
                 bool canUse = InventoryManager.instance.CheckForItem(itemSelected);
                 Debug.Log(canUse);
-                if (canUse && itemSelected == genBehaviour.fuelItem && genBehaviour.hasFuel.Value == false)
+                if (canUse && itemSelected == genBehaviour.fuelItem)
                 {
                     Debug.Log("HAsta aqui llegamos");
                     Item receivedItem = InventoryManager.instance.GetSelectedItem(true);
@@ -170,7 +170,13 @@ public class Interact : NetworkBehaviour
                 if (canAdd)
                 {
                     item = hit.transform.GetComponent<ObjectInteract>().item;
+                    //if (!IsHost)
+                    //{
+                    //    hit.transform.GetComponent<ObjectInteract>().InteractWithObjectServerRPC();
+                    //}
+                    
                     hit.transform.GetComponent<ObjectInteract>().InteractWithObject();
+                    
                     InventoryManager.instance.AddItem(item);
                 } 
             }  

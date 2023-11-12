@@ -111,7 +111,7 @@ MonoBehaviour:
     - sceneGUID: 8124e5870f4fd4c779e7a5f994e84ad1
       hasProbeVolumes: 0
     - sceneGUID: 9b894eeaba83f524880c1b5774869f2a
-      hasProbeVolumes: 1
+      hasProbeVolumes: 0
     - sceneGUID: 0fb434581fa3e364692e09db87759f34
       hasProbeVolumes: 0
     - sceneGUID: 00000000000000000000000000000000

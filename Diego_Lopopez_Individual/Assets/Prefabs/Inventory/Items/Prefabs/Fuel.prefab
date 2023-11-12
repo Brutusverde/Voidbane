@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6019134352745659359}
   - component: {fileID: 4210803287166270842}
   - component: {fileID: 2884616777588746560}
+  - component: {fileID: 9152554290830090311}
   m_Layer: 0
   m_Name: Fuel
   m_TagString: Untagged
@@ -35,7 +36,7 @@ Transform:
   - {fileID: 2604050875049204372}
   - {fileID: 8133924359759019142}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!65 &4210803287166270842
 BoxCollider:
@@ -71,6 +72,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 18ece44a506b04e45a48f29a5328cc07, type: 2}
+--- !u!114 &9152554290830090311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952583474473564798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &2760160593727361884
 GameObject:
   m_ObjectHideFlags: 0
