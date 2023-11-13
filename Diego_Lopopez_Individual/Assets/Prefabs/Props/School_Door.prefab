@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1887862007368521223}
   - component: {fileID: 4070681057048497376}
   - component: {fileID: 2106303156151235073}
+  - component: {fileID: 7314394095819627226}
   m_Layer: 0
   m_Name: School_Door
   m_TagString: Untagged
@@ -33,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 3675304292605655502}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1887862007368521223
 MonoBehaviour:
@@ -47,13 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d196a4caf7b98a4fbb97e459fcb4836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetAngle: {x: 0, y: 45, z: 0}
   doorOpen:
     m_InternalValue: 0
-  forward: {x: 0, y: 0, z: 0}
-  startPosition: {x: 0, y: 0, z: 0}
-  StartRotation: {x: 0, y: 0, z: 0}
-  forwardDirection: 0
+  animator: {fileID: 4070681057048497376}
 --- !u!95 &4070681057048497376
 Animator:
   serializedVersion: 5
@@ -95,6 +92,20 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &7314394095819627226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2973271275566831756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad8deae8091111f4eb30a56c1f4e0d3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 4070681057048497376}
 --- !u!1 &4988288401707891846
 GameObject:
   m_ObjectHideFlags: 0

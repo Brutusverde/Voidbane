@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
+using System.Security.Cryptography;
 
 public class Interact : NetworkBehaviour
 {
@@ -11,6 +12,7 @@ public class Interact : NetworkBehaviour
 
     public Camera cam;
     public float maxDist;
+    public float fireMaxDist;
     private Item item;
 
     [Header("Locker interaction")]
@@ -40,29 +42,30 @@ public class Interact : NetworkBehaviour
 
     private void Update()
     {
+        InteractWithCrosshair();
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             InteractWithGen();
             InteractWithObject();
             InteractWithOil();
             InteractWithLocker();
-            
+            InteractWithDoor();
         }
-
-        InteractWithCrosshair();
-
     }
+
+
+    #region Crosshair interaction
 
     private void InteractWithCrosshair()
     {
         RaycastHit hit;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDist))
+        RaycastHit hit2;
+
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit2, fireMaxDist))
         {
-            GenBehaviour gen = hit.transform.GetComponent<GenBehaviour>();
-            OilSpillBehaviour oil = hit.transform.GetComponent<OilSpillBehaviour>();
-            ObjectBehaviour tryItem = hit.transform.GetComponent<ObjectBehaviour>();
-            LockerBehaviour locker = hit.transform.GetComponent<LockerBehaviour>();
-            if(gen || oil || tryItem || locker)
+            OilSpillBehaviour oil = hit2.transform.GetComponent<OilSpillBehaviour>();
+            if (oil)
             {
                 crosshair.transform.localScale = big;
             }
@@ -70,9 +73,34 @@ public class Interact : NetworkBehaviour
             {
                 crosshair.transform.localScale = small;
             }
+
+
+            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDist))
+            {
+                GenBehaviour gen = hit.transform.GetComponent<GenBehaviour>();
+                ObjectBehaviour tryItem = hit.transform.GetComponent<ObjectBehaviour>();
+                LockerBehaviour locker = hit.transform.GetComponent<LockerBehaviour>();
+                DoorBehaviour Door = hit.transform.GetComponentInParent<DoorBehaviour>();
+
+
+                if (gen || tryItem || locker || Door)
+                {
+                    crosshair.transform.localScale = big;
+                }
+                else
+                {
+                    crosshair.transform.localScale = small;
+                }
+            }
+        }
+        
+        else
+        {
+            crosshair.transform.localScale = small;
         }
     }
 
+    #endregion
 
     #region Gen interaction
 
@@ -123,7 +151,7 @@ public class Interact : NetworkBehaviour
     void InteractWithOil()
     {
         RaycastHit hit;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDist))
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, fireMaxDist))
         {
             OilSpillBehaviour oil = hit.transform.GetComponent<OilSpillBehaviour>();
             if (oil)
@@ -146,7 +174,7 @@ public class Interact : NetworkBehaviour
     private void InteractWithOilServerRPC(Vector3 rotation)
     {
         RaycastHit hit;
-        if (Physics.Raycast(cam.transform.position, rotation, out hit, maxDist))
+        if (Physics.Raycast(cam.transform.position, rotation, out hit, fireMaxDist))
         {
             OilSpillBehaviour oil = hit.transform.GetComponent<OilSpillBehaviour>();
             oil.turnOnFire.Value = true;
@@ -350,6 +378,30 @@ public class Interact : NetworkBehaviour
                     locker.LockerFull.Value = true;
 
                 }
+            }
+        }
+    }
+
+    #endregion
+
+    #region Door interaction
+
+    private void InteractWithDoor()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDist))
+        {
+            DoorBehaviour Door = hit.transform.GetComponentInParent<DoorBehaviour>();
+            if (!Door) return;
+
+            if (Door.doorOpen.Value == false)
+            {
+                Door.OpenDoorServerRPC();
+            }
+
+            else if (Door.doorOpen.Value == true)
+            {
+                Door.CloseDoorServerRPC();
             }
         }
     }

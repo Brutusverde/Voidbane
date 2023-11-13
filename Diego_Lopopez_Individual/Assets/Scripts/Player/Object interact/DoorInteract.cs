@@ -15,20 +15,19 @@ public class DoorInteract : NetworkBehaviour
             RaycastHit hit;
             if(Physics.Raycast(cam.position, cam.forward, out hit, 20f))
             {
-                //Debug.Log(hit.transform.name);
                 DoorBehaviour Door = hit.transform.GetComponentInParent<DoorBehaviour>();
                 if (!Door) return;
 
                 if (Door.doorOpen.Value == false)
                 {
                     Debug.Log("Door open");
-                    Door.openDoor(cam.position);
+                    Door.OpenDoorServerRPC();
                 }
 
                 else if (Door.doorOpen.Value == true)
                 {
                     Debug.Log("Door close");
-                    Door.closeDoor(cam.position);
+                    Door.CloseDoorServerRPC();
                 }
             }
         }
