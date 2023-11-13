@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 646.50006, g: 646.50006, b: 646.50006, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -17229,7 +17229,7 @@ PrefabInstance:
     - target: {fileID: 6482664673143668828, guid: a126de7ae7bd926499cb148313c9d111,
         type: 3}
       propertyPath: countDownFull
-      value: 1000
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6482664673143668828, guid: a126de7ae7bd926499cb148313c9d111,
         type: 3}
@@ -17550,32 +17550,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 877987033}
     m_Modifications:
-    - target: {fileID: 919020669582634003, guid: 9a6daa8f2a18fca4bb8574583addecce,
-        type: 3}
-      propertyPath: fuelItem
-      value: 
-      objectReference: {fileID: 11400000, guid: 18ece44a506b04e45a48f29a5328cc07,
-        type: 2}
-    - target: {fileID: 919020669582634003, guid: 9a6daa8f2a18fca4bb8574583addecce,
-        type: 3}
-      propertyPath: lightControllerSO
-      value: 
-      objectReference: {fileID: 11400000, guid: aacd30928c629044ca4e2d10313b7d59,
-        type: 2}
-    - target: {fileID: 1376245423948405910, guid: 9a6daa8f2a18fca4bb8574583addecce,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
     - target: {fileID: 3292482650434003056, guid: 9a6daa8f2a18fca4bb8574583addecce,
         type: 3}
       propertyPath: m_Name
       value: Generator
-      objectReference: {fileID: 0}
-    - target: {fileID: 3292482650434003056, guid: 9a6daa8f2a18fca4bb8574583addecce,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5135432014835081973, guid: 9a6daa8f2a18fca4bb8574583addecce,
         type: 3}
@@ -17590,17 +17568,17 @@ PrefabInstance:
     - target: {fileID: 5706792141938339783, guid: 9a6daa8f2a18fca4bb8574583addecce,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.419
+      value: 2.359
       objectReference: {fileID: 0}
     - target: {fileID: 5706792141938339783, guid: 9a6daa8f2a18fca4bb8574583addecce,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.959
+      value: 0.863
       objectReference: {fileID: 0}
     - target: {fileID: 5706792141938339783, guid: 9a6daa8f2a18fca4bb8574583addecce,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.01
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5706792141938339783, guid: 9a6daa8f2a18fca4bb8574583addecce,
         type: 3}
@@ -17636,21 +17614,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7469396809807202930, guid: 9a6daa8f2a18fca4bb8574583addecce,
-        type: 3}
-      propertyPath: m_Shadows.m_Type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8591224603601933081, guid: 9a6daa8f2a18fca4bb8574583addecce,
-        type: 3}
-      propertyPath: m_UseContactShadow.m_Override
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8632150626311281984, guid: 9a6daa8f2a18fca4bb8574583addecce,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
