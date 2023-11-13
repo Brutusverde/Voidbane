@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Unity.Netcode;
+using UnityEngine;
 
-public class ObjectInteract : NetworkBehaviour
+public class ObjectBehaviour : MonoBehaviour
 {
     public Item item;
 
     public void InteractWithObject()
     {
-        
+
         Destroy(gameObject);
     }
 
@@ -19,5 +19,3 @@ public class ObjectInteract : NetworkBehaviour
         Destroy(gameObject);
     }
 }
-
-

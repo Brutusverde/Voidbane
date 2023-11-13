@@ -60,7 +60,7 @@ public class Interact : NetworkBehaviour
         {
             GenBehaviour gen = hit.transform.GetComponent<GenBehaviour>();
             OilSpillBehaviour oil = hit.transform.GetComponent<OilSpillBehaviour>();
-            ObjectInteract tryItem = hit.transform.GetComponent<ObjectInteract>();
+            ObjectBehaviour tryItem = hit.transform.GetComponent<ObjectBehaviour>();
             LockerBehaviour locker = hit.transform.GetComponent<LockerBehaviour>();
             if(gen || oil || tryItem || locker)
             {
@@ -161,21 +161,21 @@ public class Interact : NetworkBehaviour
         RaycastHit hit;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDist))
         {
-            ObjectInteract tryItem = hit.transform.GetComponent<ObjectInteract>();
+            ObjectBehaviour tryItem = hit.transform.GetComponent<ObjectBehaviour>();
             if (tryItem)
             {
-                item = hit.transform.GetComponent<ObjectInteract>().item;
+                item = hit.transform.GetComponent<ObjectBehaviour>().item;
                 
                 bool canAdd = InventoryManager.instance.CheckForSpace(item);
                 if (canAdd)
                 {
-                    item = hit.transform.GetComponent<ObjectInteract>().item;
+                    item = hit.transform.GetComponent<ObjectBehaviour>().item;
                     //if (!IsHost)
                     //{
                     //    hit.transform.GetComponent<ObjectInteract>().InteractWithObjectServerRPC();
                     //}
                     
-                    hit.transform.GetComponent<ObjectInteract>().InteractWithObject();
+                    hit.transform.GetComponent<ObjectBehaviour>().InteractWithObject();
                     
                     InventoryManager.instance.AddItem(item);
                 } 

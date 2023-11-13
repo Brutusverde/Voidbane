@@ -56,6 +56,8 @@ public class TestRelay : MonoBehaviour
 
             keyText.text = ("Key: " + joinCode);
 
+            GUIUtility.systemCopyBuffer = joinCode;
+
             RelayServerData relayServerData = new RelayServerData(allocation, "udp");
 
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);

@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6019134352745659359}
   - component: {fileID: 4210803287166270842}
-  - component: {fileID: 2884616777588746560}
   - component: {fileID: 9152554290830090311}
+  - component: {fileID: 8801998399551194319}
   m_Layer: 0
   m_Name: Fuel
   m_TagString: Untagged
@@ -59,19 +59,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6300545, y: 0.8271569, z: 0.29247606}
   m_Center: {x: -0.0030322075, y: 0.44, z: -0.002010852}
---- !u!114 &2884616777588746560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 952583474473564798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c17973b3b7c89124b9356c711a2a0cfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 18ece44a506b04e45a48f29a5328cc07, type: 2}
 --- !u!114 &9152554290830090311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,6 +79,19 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &8801998399551194319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952583474473564798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ee6ca5d1ca5bed4ebd4f5d9887cecdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 18ece44a506b04e45a48f29a5328cc07, type: 2}
 --- !u!1 &2760160593727361884
 GameObject:
   m_ObjectHideFlags: 0

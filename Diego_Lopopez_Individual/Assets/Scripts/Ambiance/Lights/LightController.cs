@@ -8,20 +8,17 @@ using TMPro;
 
 public class LightController : NetworkBehaviour
 {
+    public LightControllerSO lightController;
+
     [Header("Ambiance")]
     public Volume volume;
 
     [Header("Timer")]
     public float countDownFull;
     public NetworkVariable<float> CountDown = new NetworkVariable<float>();
-
     public TextMeshProUGUI text;
 
     private NetworkVariable<bool> countDownStarted = new NetworkVariable<bool>();
-
-    [Header("Gen")]
-    public LightControllerSO lightController;
-
 
     // Start is called before the first frame update
 

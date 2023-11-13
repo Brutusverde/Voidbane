@@ -5,10 +5,14 @@ using Unity.Netcode;
 
 public class GenBehaviour : NetworkBehaviour
 {
-    public NetworkVariable<bool> hasFuel = new NetworkVariable<bool>();
-    public LightController lightController;
-    public Item fuelItem;
     public LightControllerSO lightControllerSO;
+    public Item fuelItem;
+    [Header("")]
+
+    public NetworkVariable<bool> hasFuel = new NetworkVariable<bool>();
+
+    [HideInInspector] public LightController lightController;
+
 
     public override void OnNetworkSpawn()
     {
@@ -17,7 +21,6 @@ public class GenBehaviour : NetworkBehaviour
         lightController = GameObject.Find("GameController").GetComponent<LightController>();
         if (!IsHost) return;
         hasFuel.Value = false;
-        //lightController.StartTimerServerRPC();
     }
 
     private void Update()

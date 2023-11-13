@@ -5,9 +5,11 @@ using Unity.Netcode;
 
 public class LightTurn : NetworkBehaviour
 {
+    public LightControllerSO lightController;
+    [Header("")]
+
     public Light _light;
     public MeshRenderer  lightBase;
-    public LightControllerSO lightController;
     private LightController lc;
 
     private GameObject volume;
