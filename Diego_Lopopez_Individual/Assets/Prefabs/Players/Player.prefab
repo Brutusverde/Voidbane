@@ -3272,6 +3272,7 @@ MonoBehaviour:
   crosshair: {fileID: 8476686053244878667}
   small: {x: 0.04, y: 0.04, z: 0.04}
   big: {x: 0.1, y: 0.1, z: 0.1}
+  scale: 10
 --- !u!114 &8485523690047963417
 MonoBehaviour:
   m_ObjectHideFlags: 0

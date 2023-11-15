@@ -39,7 +39,6 @@ public class Interact : NetworkBehaviour
     public Vector3 big;
 
 
-
     private void Update()
     {
         InteractWithCrosshair();
@@ -407,4 +406,5 @@ public class Interact : NetworkBehaviour
     }
 
     #endregion
+
 }
