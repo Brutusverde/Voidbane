@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 646.50006, g: 646.50006, b: 646.50006, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1089,7 +1089,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &139979090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1112,7 +1112,7 @@ MonoBehaviour:
   lowestSubdivLevelOverride: 0
   highestSubdivLevelOverride: -1
   overridesSubdivLevels: 0
-  mightNeedRebaking: 1
+  mightNeedRebaking: 0
   cachedTransform:
     e00: 1
     e01: 0
@@ -1125,12 +1125,12 @@ MonoBehaviour:
     e20: 0
     e21: 0
     e22: 1
-    e23: 2.2572994
+    e23: 2.257299
     e30: 0
     e31: 0
     e32: 0
     e33: 1
-  cachedHashCode: 2125256864
+  cachedHashCode: 2118820521
   fillEmptySpaces: 0
   version: 1
   globalVolume: 0
@@ -17137,7 +17137,7 @@ PrefabInstance:
     - target: {fileID: 6482664673143668828, guid: a126de7ae7bd926499cb148313c9d111,
         type: 3}
       propertyPath: countDownFull
-      value: 25
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 6482664673143668828, guid: a126de7ae7bd926499cb148313c9d111,
         type: 3}
@@ -17383,7 +17383,7 @@ PrefabInstance:
         type: 3}
       propertyPath: NetworkConfig.PlayerPrefab
       value: 
-      objectReference: {fileID: 2938083241191442131, guid: e2583a630f626cb4496a4e4b542b44d9,
+      objectReference: {fileID: 5729260909959280006, guid: e2583a630f626cb4496a4e4b542b44d9,
         type: 3}
     - target: {fileID: 6892820784756242298, guid: 58a88bbd0cdd67745b120fdfb123b9d3,
         type: 3}
@@ -17601,6 +17601,21 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 394361421
       objectReference: {fileID: 0}
+    - target: {fileID: 1630236324745428499, guid: b2b5b37d97a739143bf61b5600592b56,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: 5.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630236324745428499, guid: b2b5b37d97a739143bf61b5600592b56,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630236324745428499, guid: b2b5b37d97a739143bf61b5600592b56,
+        type: 3}
+      propertyPath: m_UseBoundingSphereOverride
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -17751,6 +17766,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800441268727863958, guid: 51b9dcc3661bacf429ef2302edc68976,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: 5.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800441268727863958, guid: 51b9dcc3661bacf429ef2302edc68976,
+        type: 3}
+      propertyPath: m_UseBoundingSphereOverride
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

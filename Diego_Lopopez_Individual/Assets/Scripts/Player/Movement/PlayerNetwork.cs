@@ -16,7 +16,7 @@ public class PlayerNetwork : NetworkBehaviour
     public float groundDrag;
 
     [Header("Ground check")]
-    private float playerHeight = 2;
+    private float playerHeight = 2.1f;
     public LayerMask whatIsGround;
     public bool grounded;
     public LayerMask whatIsWater;
@@ -50,6 +50,11 @@ public class PlayerNetwork : NetworkBehaviour
     public KeyCode jumpkey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
 
+    [Header("Others")]
+    public Animator animator;
+    public SkinnedMeshRenderer surface;
+    public SkinnedMeshRenderer joints;
+
     private bool isRuning;
     public bool resting;
     public bool inLocker;
@@ -62,6 +67,8 @@ public class PlayerNetwork : NetworkBehaviour
         SanityPoint.Value = maxSanity;
 
         if (!IsOwner) return;
+        surface.enabled = false;
+        joints.enabled = false;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
@@ -74,6 +81,8 @@ public class PlayerNetwork : NetworkBehaviour
         if (inLocker) return;
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+
+        
 
         if (Input.GetKey(jumpkey) && readyToJump && watered)
         {
@@ -96,6 +105,9 @@ public class PlayerNetwork : NetworkBehaviour
             {
                 speed = sprintSpeed;
                 isRuning = true;
+                animator.ResetTrigger("Walking");
+                animator.SetTrigger("Running");
+                animator.SetBool("RunForward", true);
             }    
         }
 
@@ -106,6 +118,7 @@ public class PlayerNetwork : NetworkBehaviour
             {
                 speed = waterSprintSpeed;
                 isRuning = true;
+                
             }
         }
 
@@ -119,6 +132,68 @@ public class PlayerNetwork : NetworkBehaviour
         {
             isRuning = false;
             speed = moveSpeed;
+
+            animator.ResetTrigger("Running");
+            animator.SetBool("RunForward", false);
+        }
+
+
+
+
+        //Animation
+
+        //Walking forward
+        if (verticalInput > 0 && !isRuning )
+        {
+            animator.SetTrigger("Walking");
+            animator.SetBool("WalkForward", true);
+        }
+
+        //Walking backwards
+        if (verticalInput < 0 && !isRuning)
+        {
+            animator.SetTrigger("Walking");
+            animator.SetBool("WalkBackwards", true);
+        }
+
+        //Walking Left
+        if (horizontalInput < 0 && !isRuning)
+        {
+            animator.SetTrigger("Walking");
+            animator.SetBool("WalkLeft", true);
+        }
+
+        //Walking Right
+        if (horizontalInput > 0 && !isRuning)
+        {
+            animator.SetTrigger("Walking");
+            animator.SetBool("WalkRight", true);
+        }
+
+        //Running forward
+        if (verticalInput > 0 && isRuning)
+        {
+            animator.SetTrigger("Running");
+            animator.SetBool("RunBackwards", true);
+        }
+
+        //Running backwards
+        if (verticalInput < 0 && isRuning)
+        {
+            animator.SetTrigger("Running");
+            animator.SetBool("RunBackwards", true);
+        }
+
+        if (horizontalInput == 0 && verticalInput == 0)
+        {
+            animator.SetBool("WalkForward", false);
+            animator.SetBool("WalkBackwards", false);
+            animator.SetBool("RunBackwards", false);
+            animator.SetBool("RunForward", false);
+            animator.SetBool("WalkLeft", false);
+            animator.SetBool("WalkRight", false);
+            animator.ResetTrigger("Walking");
+            animator.ResetTrigger("Running");
         }
     }
 

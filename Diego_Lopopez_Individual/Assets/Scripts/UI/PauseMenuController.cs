@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.UI;
@@ -71,6 +72,11 @@ public class PauseMenuController : NetworkBehaviour
     public void close()
     {
         Application.Quit();
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
 

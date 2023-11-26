@@ -74,7 +74,4 @@ public class ScaresInteract : MonoBehaviour
         }
         yield break;
     }
-
-
-
 }
