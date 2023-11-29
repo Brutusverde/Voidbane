@@ -17,7 +17,9 @@ public class PlayerCam : NetworkBehaviour
 
     void Start()
     {
+
         cam = GetComponent<Camera>();
+
         if (!IsOwner || !IsLocalPlayer)
         {
             cam.gameObject.SetActive(false);
@@ -30,6 +32,7 @@ public class PlayerCam : NetworkBehaviour
 
     private void Update()
     {
+
         if (!IsOwner || !IsLocalPlayer) return;
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
