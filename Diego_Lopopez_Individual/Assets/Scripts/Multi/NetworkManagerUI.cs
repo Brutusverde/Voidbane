@@ -4,12 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using Unity.Netcode;
 
-public class NetworkManagerUI : MonoBehaviour
+public class NetworkManagerUI : NetworkBehaviour
 {
     //[SerializeField] private Button serverBtn;
     [SerializeField] private Button hostBtn;
     [SerializeField] private Button clientBtn;
-    public GameObject cam;
 
 
     private void Awake()
@@ -22,17 +21,19 @@ public class NetworkManagerUI : MonoBehaviour
         hostBtn.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.StartHost();
-            hostBtn.gameObject.SetActive(false);
-            clientBtn.gameObject.SetActive(false);
-            cam.gameObject.SetActive(false);
+            //hostBtn.gameObject.SetActive(false);
+            //clientBtn.gameObject.SetActive(false);
+            //cam.gameObject.SetActive(false);
+            
         });
 
         clientBtn.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.StartClient();
-            hostBtn.gameObject.SetActive(false);
-            clientBtn.gameObject.SetActive(false);
-            cam.gameObject.SetActive(false);
+            //hostBtn.gameObject.SetActive(false);
+            //clientBtn.gameObject.SetActive(false);
+            //cam.gameObject.SetActive(false);
+            Loader.LoadNetwork(Loader.Scene.CharacterSelectScene);
         });
     }
 

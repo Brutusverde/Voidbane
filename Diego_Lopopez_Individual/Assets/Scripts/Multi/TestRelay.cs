@@ -16,9 +16,10 @@ using System;
 public class TestRelay : MonoBehaviour
 {
     public TextMeshProUGUI keyText;
-    public GameObject button1;
-    public GameObject button2;
-    public GameObject cam;
+    public string key;
+    //public GameObject button1;
+    //public GameObject button2;
+    //public GameObject cam;
     //public GameObject console;
     public GameObject keyUI;
     //public GameObject inputCanvas;
@@ -26,6 +27,12 @@ public class TestRelay : MonoBehaviour
 
 
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     async void Start()
     {
         await UnityServices.InitializeAsync();
@@ -45,16 +52,21 @@ public class TestRelay : MonoBehaviour
             Allocation allocation = await RelayService.Instance.CreateAllocationAsync(4);
 
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+            key = joinCode;
 
             Debug.Log(joinCode);
 
-            button1.SetActive(false);
-            button2.SetActive(false);
-            cam.SetActive(false);
+            //button1.SetActive(false);
+            //button2.SetActive(false);
+            //cam.SetActive(false);
             //console.SetActive(true);
-            keyUI.SetActive(true);
+            if (keyUI)
+            {
+                keyUI.SetActive(true);
 
-            keyText.text = ("Key: " + joinCode);
+                keyText.text = ("Key: " + joinCode);
+            }
+           
 
             GUIUtility.systemCopyBuffer = joinCode;
 
@@ -63,6 +75,7 @@ public class TestRelay : MonoBehaviour
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
             NetworkManager.Singleton.StartHost();
+            Loader.LoadNetwork(Loader.Scene.CharacterSelectScene);
         } 
         catch (RelayServiceException e)
         {
@@ -71,10 +84,10 @@ public class TestRelay : MonoBehaviour
     }
 
 
-    //public void JoinRelayUI()
-    //{
-    //    inputCanvas.SetActive(true);
-    //}
+    public void StartMap()
+    {
+        Loader.LoadNetwork(Loader.Scene.Test2);
+    }
 
 
     //[Command]
@@ -83,25 +96,32 @@ public class TestRelay : MonoBehaviour
         try
         {
             string joinCode = inputField.text;
-            if(inputField.text != null)
+            key = joinCode;
+            if (inputField.text != null)
             {
                 Debug.Log("Joining Relay With " + joinCode);
                 JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
 
-                button1.SetActive(false);
-                button2.SetActive(false);
-                cam.SetActive(false);
+                //button1.SetActive(false);
+                //button2.SetActive(false);
+                //cam.SetActive(false);
                 //console.SetActive(true);
 
-                keyUI.SetActive(true);
+                if (keyUI)
+                {
+                    keyUI.SetActive(true);
 
-                keyText.text = ("Key: " + joinCode);
+                    keyText.text = ("Key: " + joinCode);
+                }
+
+                    
 
                 RelayServerData relayServerData = new RelayServerData(joinAllocation, "dtls");
 
                 NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
                 NetworkManager.Singleton.StartClient();
+                Loader.LoadNetwork(Loader.Scene.CharacterSelectScene);
             }
             else
             {
