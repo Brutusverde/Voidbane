@@ -76,7 +76,7 @@ public class PauseMenuController : NetworkBehaviour
 
     public void MainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("LobbyScene");
     }
 
 

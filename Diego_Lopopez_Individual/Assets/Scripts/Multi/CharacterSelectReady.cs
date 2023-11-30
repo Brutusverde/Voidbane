@@ -6,6 +6,8 @@ using Unity.Netcode;
 public class CharacterSelectReady : NetworkBehaviour
 {
     public static CharacterSelectReady Instance { get; private set; }
+    public NetworkVariable<bool> schoolMap = new NetworkVariable<bool>();
+    public NetworkVariable<bool> mazeMap = new NetworkVariable<bool>();
 
     private Dictionary<ulong, bool> playerReadyDictionary;
 
@@ -38,7 +40,20 @@ public class CharacterSelectReady : NetworkBehaviour
 
         if (allClientsReady)
         {
-            Loader.LoadNetwork(Loader.Scene.Test2);
+            if(schoolMap.Value == true)
+            {
+                Loader.LoadNetwork(Loader.Scene.Test2);
+            }
+            else if(mazeMap.Value == true)
+            {
+                Loader.LoadNetwork(Loader.Scene.Test3);
+            }
+
+            else if (schoolMap.Value == false && mazeMap.Value == false)
+            {
+                Loader.LoadNetwork(Loader.Scene.Test2);
+            }
+
         }
     }
 }
