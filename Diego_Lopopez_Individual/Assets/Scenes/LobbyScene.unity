@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 4531.3765, g: 3251.6216, b: 3371.184, a: 1}
+  m_IndirectSpecularColor: {r: 4244.438, g: 2811.7014, b: 2346.5823, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -125,6 +125,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &9272304 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4405412061824078133, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+    type: 3}
+  m_PrefabInstance: {fileID: 3137043696722847512}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &38151118
 GameObject:
   m_ObjectHideFlags: 0
@@ -1801,7 +1807,6 @@ GameObject:
   m_Component:
   - component: {fileID: 854639040}
   - component: {fileID: 854639039}
-  - component: {fileID: 854639038}
   - component: {fileID: 854639037}
   m_Layer: 0
   m_Name: Menu_Cam
@@ -1939,14 +1944,6 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
---- !u!81 &854639038
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 854639036}
-  m_Enabled: 1
 --- !u!20 &854639039
 Camera:
   m_ObjectHideFlags: 0
@@ -2865,12 +2862,32 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 3137043696722847512}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 9272304}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 854da604be025f84db9eef6f1df02dff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1181668273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9272304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2715109958
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &1210181664
 GameObject:
   m_ObjectHideFlags: 0
@@ -4089,6 +4106,111 @@ PrefabInstance:
       propertyPath: inputField
       value: 
       objectReference: {fileID: 1402767199}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[0].a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[0].b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[0].g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[0].r
+      value: 0.6981132
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[1].a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[1].b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[1].g
+      value: 0.70980394
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[1].r
+      value: 0.010703921
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[2].a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[2].b
+      value: 0.8113208
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[2].g
+      value: 0.46111616
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[2].r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[3].a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[3].b
+      value: 0.8113208
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[3].g
+      value: 0.8113208
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[3].r
+      value: 0.8113208
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[4].a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[4].b
+      value: 0.1981132
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[4].g
+      value: 0.1981132
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635881661918567405, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      propertyPath: playerColorList.Array.data[4].r
+      value: 0.1981132
+      objectReference: {fileID: 0}
     - target: {fileID: 4405412061824078133, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
         type: 3}
       propertyPath: m_Name
@@ -4097,7 +4219,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4405412061824078133, guid: ae4a2e83e0bbc9245982f904b7cb3b58,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1181668273}
   m_SourcePrefab: {fileID: 100100000, guid: ae4a2e83e0bbc9245982f904b7cb3b58, type: 3}
 --- !u!1001 &4360098997970528825
 PrefabInstance:

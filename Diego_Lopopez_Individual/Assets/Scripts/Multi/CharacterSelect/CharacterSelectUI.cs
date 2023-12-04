@@ -8,6 +8,7 @@ public class CharacterSelectUI : NetworkBehaviour
 {
 
     public Button readyButton;
+    public Button mainMenuButton;
     public Button schoolButton;
     public Button mazeButton;
     public Color color;
@@ -27,8 +28,14 @@ public class CharacterSelectUI : NetworkBehaviour
 
     private void Awake()
     {
-       
 
+
+        mainMenuButton.onClick.AddListener(() =>
+        {
+            NetworkManager.Singleton.Shutdown();
+            Loader.LoadNetwork(Loader.Scene.LobbyScene);
+
+        });
 
         firstColor = readyButton.GetComponent<Image>().color;
 
@@ -39,6 +46,12 @@ public class CharacterSelectUI : NetworkBehaviour
                 CharacterSelectReady.Instance.SetPlayerReady();
                 readyButton.GetComponent<Image>().color = color;
                 isReady = true;
+            }
+            else
+            {
+                CharacterSelectReady.Instance.SetPlayerNotReady();
+                readyButton.GetComponent<Image>().color = firstColor;
+                isReady = false;
             }
             
         });

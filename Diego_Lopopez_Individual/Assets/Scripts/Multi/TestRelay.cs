@@ -5,7 +5,6 @@ using Unity.Services.Core;
 using Unity.Services.Authentication;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
-//using QFSW.QC;
 using Unity.Networking.Transport.Relay;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -13,24 +12,36 @@ using TMPro;
 using UnityEngine.UI;
 using System;
 
-public class TestRelay : MonoBehaviour
+public class TestRelay : NetworkBehaviour
 {
     public TextMeshProUGUI keyText;
     public string key;
-    //public GameObject button1;
-    //public GameObject button2;
-    //public GameObject cam;
-    //public GameObject console;
     public GameObject keyUI;
-    //public GameObject inputCanvas;
     public TMP_InputField inputField;
+
+    public static TestRelay Instance { get; private set; }
+
+    private NetworkList<PlayerData> playerDataNetworkList;
+
+    public event EventHandler OnPlayerDataNetworkListChanged;
+
+    public List<Color> playerColorList;
 
 
     // Start is called before the first frame update
 
     private void Awake()
     {
+        Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        playerDataNetworkList = new NetworkList<PlayerData>();
+        playerDataNetworkList.OnListChanged += PlayerDataNetworkList_OnListChanged;
+    }
+
+    private void PlayerDataNetworkList_OnListChanged(NetworkListEvent<PlayerData> changeEvent)
+    {
+        OnPlayerDataNetworkListChanged?.Invoke(this, EventArgs.Empty);
     }
 
     async void Start()
@@ -44,6 +55,12 @@ public class TestRelay : MonoBehaviour
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
     }
 
+    public void StartMap()
+    {
+        Loader.LoadNetwork(Loader.Scene.Test2);
+    }
+
+    #region Create relay
     //[Command]
     public async void CreateRelay()
     {
@@ -56,10 +73,7 @@ public class TestRelay : MonoBehaviour
 
             Debug.Log(joinCode);
 
-            //button1.SetActive(false);
-            //button2.SetActive(false);
-            //cam.SetActive(false);
-            //console.SetActive(true);
+
             if (keyUI)
             {
                 keyUI.SetActive(true);
@@ -74,8 +88,8 @@ public class TestRelay : MonoBehaviour
 
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
-            NetworkManager.Singleton.StartHost();
-            Loader.LoadNetwork(Loader.Scene.CharacterSelectScene);
+            StartHost();
+
         } 
         catch (RelayServiceException e)
         {
@@ -83,13 +97,40 @@ public class TestRelay : MonoBehaviour
         }
     }
 
-
-    public void StartMap()
+    public void StartHost()
     {
-        Loader.LoadNetwork(Loader.Scene.Test2);
+        NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_OnClientConnectedCallback;
+        NetworkManager.Singleton.OnClientDisconnectCallback += Singleton_Server_OnClientDisconnectCallback;
+        NetworkManager.Singleton.StartHost();
+
+        
+        Loader.LoadNetwork(Loader.Scene.CharacterSelectScene);
     }
 
+    private void Singleton_Server_OnClientDisconnectCallback(ulong clientId)
+    {
+        for (int i = 0; i < playerDataNetworkList.Count; i++)
+        {
+            PlayerData playerData = playerDataNetworkList[i];
+            if(playerData.clientId == clientId)
+            {
+                playerDataNetworkList.RemoveAt(i);
+            }
+        }
+    }
 
+    private void NetworkManager_OnClientConnectedCallback(ulong clientId)
+    {
+        playerDataNetworkList.Add(new PlayerData
+        {
+            clientId = clientId,
+            colorId = getFirstUnusedColorId(),
+        });
+        
+    }
+    #endregion
+
+    #region Join relay
     //[Command]
     public async void JoinRelay()
     {
@@ -119,9 +160,8 @@ public class TestRelay : MonoBehaviour
                 RelayServerData relayServerData = new RelayServerData(joinAllocation, "dtls");
 
                 NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
-
-                NetworkManager.Singleton.StartClient();
-                Loader.LoadNetwork(Loader.Scene.CharacterSelectScene);
+                StartClient();
+                
             }
             else
             {
@@ -133,5 +173,117 @@ public class TestRelay : MonoBehaviour
         {
             Debug.Log(e);
         }
+    }
+
+
+    public void StartClient()
+    {
+        NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback;
+
+        NetworkManager.Singleton.StartClient();
+        Loader.LoadNetwork(Loader.Scene.CharacterSelectScene);
+    }
+
+    private void NetworkManager_Client_OnClientDisconnectCallback(ulong clientId)
+    {
+        throw new NotImplementedException();
+    }
+    #endregion
+
+    public bool IsPlayerIndexConnected(int playerIndex)
+    {
+        return playerIndex < playerDataNetworkList.Count;
+    }
+
+    public PlayerData GetPlayerDataFromClientId(ulong clientId)
+    {
+        foreach (PlayerData playerData in playerDataNetworkList)
+        {
+            if(playerData.clientId == clientId)
+            {
+                return playerData;
+            }
+        }
+        return default;
+    }
+
+    public int GetPlayerDataIndexFromClientId(ulong clientId)
+    {
+        for (int i = 0; i < playerDataNetworkList.Count; i++)
+        {
+            if (playerDataNetworkList[i].clientId == clientId)
+            {
+                return i;
+            }
+        }
+
+
+        return -1;
+    }
+
+    public PlayerData GetPlayerData()
+    {
+        return GetPlayerDataFromClientId(NetworkManager.Singleton.LocalClientId);
+        
+    }
+
+    public PlayerData GetPlayerDataFromPlayerIndex(int playerIndex)
+    {
+        return playerDataNetworkList[playerIndex];
+    }
+
+
+    public Color GetPlayerColor(int colorId)
+    {
+        return playerColorList[colorId];
+    }
+
+    public void ChangePlayerColor(int colorId)
+    {
+        ChangePlayerColorServerRPC(colorId);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void ChangePlayerColorServerRPC(int colorId, ServerRpcParams serverRpcParams = default)
+    {
+        if (!IsColorAvailable(colorId))
+        {
+            return;
+        }
+
+        int playerDataIndex = GetPlayerDataIndexFromClientId(serverRpcParams.Receive.SenderClientId);
+        PlayerData playerData = playerDataNetworkList[playerDataIndex];
+        playerData.colorId = colorId;
+        playerDataNetworkList[playerDataIndex] = playerData;
+    }
+
+    private bool IsColorAvailable(int colorId)
+    {
+        foreach (PlayerData playerData in playerDataNetworkList)
+        {
+            if(playerData.colorId == colorId)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private int getFirstUnusedColorId()
+    {
+        for (int i = 0; i < playerColorList.Count; i++)
+        {
+            if (IsColorAvailable(i))
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+    public void KickPlayer(ulong clientId)
+    {
+        NetworkManager.Singleton.DisconnectClient(clientId);
     }
 }

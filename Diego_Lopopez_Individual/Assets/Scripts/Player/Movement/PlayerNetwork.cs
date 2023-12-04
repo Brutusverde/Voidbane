@@ -54,6 +54,7 @@ public class PlayerNetwork : NetworkBehaviour
     public Animator animator;
     public SkinnedMeshRenderer surface;
     public SkinnedMeshRenderer joints;
+    public PlayerVisual playerVisual;
 
     private bool isRuning;
     public bool resting;
@@ -73,6 +74,12 @@ public class PlayerNetwork : NetworkBehaviour
         rb.freezeRotation = true;
         readyToJump = true;
         speed = moveSpeed;
+    }
+
+    private void Start()
+    {
+        PlayerData playerData = TestRelay.Instance.GetPlayerDataFromClientId(OwnerClientId);
+        playerVisual.SetPlayerColor(TestRelay.Instance.GetPlayerColor(playerData.colorId));
     }
 
     private void myInput()
