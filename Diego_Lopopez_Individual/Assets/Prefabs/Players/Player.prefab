@@ -1336,7 +1336,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 5.2147217, y: 238.00192}
+  m_AnchoredPosition: {x: 5.2148438, y: 238.00195}
   m_SizeDelta: {x: 1470.7594, y: 603.99615}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1153296496861314147
@@ -2699,7 +2699,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 5.2147217, y: 238.00192}
+  m_AnchoredPosition: {x: 5.2148438, y: 238.00195}
   m_SizeDelta: {x: 1470.7594, y: 603.99615}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2425121710113211478
@@ -5426,8 +5426,8 @@ MonoBehaviour:
   orientation: {fileID: 4440688712193735601}
   maxHealth: 100
   maxStamina: 100
-  looseStamina: 15
-  recoverStamina: 4
+  looseStamina: 5
+  recoverStamina: 10
   maxSanity: 100
   HealthPoint:
     m_InternalValue: 0

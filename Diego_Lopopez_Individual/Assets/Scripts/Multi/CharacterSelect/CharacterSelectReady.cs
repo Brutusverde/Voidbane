@@ -55,7 +55,7 @@ public class CharacterSelectReady : NetworkBehaviour
             }
             else if(mazeMap.Value == true)
             {
-                Loader.LoadNetwork(Loader.Scene.Test3);
+                Loader.LoadNetwork(Loader.Scene.Test3_1);
             }
 
             else if (schoolMap.Value == false && mazeMap.Value == false)
