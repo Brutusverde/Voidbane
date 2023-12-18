@@ -15,6 +15,7 @@ public static class Loader
         LoadingScene,
         LobbyScene,
         CharacterSelectScene,
+        PruebaPrimerNivel,
     }
 
     private static Scene targetScene;

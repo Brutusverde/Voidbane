@@ -111,6 +111,10 @@ MonoBehaviour:
       bounds:
         m_Center: {x: 0, y: 0, z: 0}
         m_Extent: {x: 24.300001, y: 24.300001, z: 48.600002}
+    - sceneGUID: ed8585e20c4035b4f9d878e1fff791d3
+      bounds:
+        m_Center: {x: -12.150002, y: 0, z: -36.45}
+        m_Extent: {x: 60.75, y: 24.300001, z: 60.750004}
     serializedHasVolumes:
     - sceneGUID: 8124e5870f4fd4c779e7a5f994e84ad1
       hasProbeVolumes: 0
@@ -134,6 +138,8 @@ MonoBehaviour:
       hasProbeVolumes: 0
     - sceneGUID: e70143788065aa24293a096a8f4e2c69
       hasProbeVolumes: 0
+    - sceneGUID: ed8585e20c4035b4f9d878e1fff791d3
+      hasProbeVolumes: 1
     serializedProfiles:
     - sceneGUID: 8124e5870f4fd4c779e7a5f994e84ad1
       profile: {fileID: 11400000, guid: 1e7462bfc56803c4991ce85ee5db4a42, type: 2}
@@ -156,6 +162,8 @@ MonoBehaviour:
     - sceneGUID: 5586c643699bd3346b218f4f894f7f44
       profile: {fileID: 11400000, guid: 1e7462bfc56803c4991ce85ee5db4a42, type: 2}
     - sceneGUID: e70143788065aa24293a096a8f4e2c69
+      profile: {fileID: 11400000, guid: 1e7462bfc56803c4991ce85ee5db4a42, type: 2}
+    - sceneGUID: ed8585e20c4035b4f9d878e1fff791d3
       profile: {fileID: 11400000, guid: 1e7462bfc56803c4991ce85ee5db4a42, type: 2}
     serializedBakeSettings:
     - sceneGUID: 8124e5870f4fd4c779e7a5f994e84ad1
@@ -356,6 +364,24 @@ MonoBehaviour:
           collisionMask:
             serializedVersion: 2
             m_Bits: 4294967291
+    - sceneGUID: ed8585e20c4035b4f9d878e1fff791d3
+      settings:
+        m_Version: 1
+        dilationSettings:
+          enableDilation: 1
+          dilationDistance: 1
+          dilationValidityThreshold: 0.25
+          dilationIterations: 1
+          squaredDistWeighting: 1
+        virtualOffsetSettings:
+          useVirtualOffset: 1
+          outOfGeoOffset: 0.01
+          searchMultiplier: 0.2
+          rayOriginBias: -0.001
+          maxHitsPerRay: 10
+          collisionMask:
+            serializedVersion: 2
+            m_Bits: 4294967291
     serializedBakingSets:
     - name: Default
       sceneGUIDs:
@@ -369,6 +395,7 @@ MonoBehaviour:
       - c6cc04435d0ad48499964312c935ac8a
       - 5586c643699bd3346b218f4f894f7f44
       - e70143788065aa24293a096a8f4e2c69
+      - ed8585e20c4035b4f9d878e1fff791d3
       settings:
         m_Version: 1
         dilationSettings:
