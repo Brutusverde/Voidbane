@@ -7,6 +7,7 @@ public class LockerBehaviour : NetworkBehaviour
 {
     public NetworkVariable<bool> LockerFull = new NetworkVariable<bool>();
     public NetworkVariable<bool> SomeoneHere = new NetworkVariable<bool>();
+    public GameObject armor;
     public Transform cameraPoint;
 
 
@@ -15,5 +16,20 @@ public class LockerBehaviour : NetworkBehaviour
     {
         base.OnNetworkSpawn();
         LockerFull.Value = false;
+        armor.SetActive(false);
     }
+
+    private void Update()
+    {
+        if (LockerFull.Value == true)
+        {
+            armor.SetActive(true);
+        }
+        else
+        {
+            armor.SetActive(false);
+        }
+    }
+
+    
 }

@@ -57,7 +57,7 @@ public class TestRelay : NetworkBehaviour
 
     public void StartMap()
     {
-        Loader.LoadNetwork(Loader.Scene.Test2);
+        Loader.LoadNetwork(Loader.Scene.Level1);
     }
 
     #region Create relay

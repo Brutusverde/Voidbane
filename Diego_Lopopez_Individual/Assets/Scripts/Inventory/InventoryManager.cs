@@ -25,6 +25,8 @@ public class InventoryManager : MonoBehaviour
 
     public bool openInventory;
 
+    public GameObject[] arms;
+
 
     private void Awake()
     {
@@ -50,6 +52,40 @@ public class InventoryManager : MonoBehaviour
             if(isNumber && number > 0 && number < inventorySlots.Length + 1)
             {
                 ChangeSelectedSlot(number - 1);
+            }
+        }
+
+        if(Input.GetAxis("Mouse ScrollWheel") > 0f)
+        {
+            if(selectedSlot >= inventorySlots.Length -1)
+            {
+                ChangeSelectedSlot(0);
+               
+                selectedSlot = 0;
+                Debug.Log(selectedSlot);
+            }
+            else
+            {
+                int newNumber = selectedSlot + 1;
+                ChangeSelectedSlot(newNumber);
+                Debug.Log(selectedSlot);
+            }
+        }
+
+        if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        {
+            if (selectedSlot <= 0)
+            {
+                ChangeSelectedSlot(0);
+
+                selectedSlot = inventorySlots.Length - 1;
+                Debug.Log(selectedSlot);
+            }
+            else
+            {
+                int newNumber = selectedSlot - 1;
+                ChangeSelectedSlot(newNumber);
+                Debug.Log(selectedSlot);
             }
         }
 
@@ -126,6 +162,8 @@ public class InventoryManager : MonoBehaviour
                 itemInSlot.RefreshCount();
                 return true;
             }
+
+
         }
 
 
@@ -206,6 +244,8 @@ public class InventoryManager : MonoBehaviour
         GameObject newItemGo = Instantiate(inventoryItemPrefab, inventorySlotShow.transform);
         InventoryItem inventoryItem = newItemGo.GetComponent<InventoryItem>();
         inventoryItem.InitialiseItem(item);
+
+        ChangeArms(item);
     }
 
 
@@ -214,6 +254,7 @@ public class InventoryManager : MonoBehaviour
         GameObject newItemGo = Instantiate(inventoryItemPrefab, slot.transform);
         InventoryItem inventoryItem = newItemGo.GetComponent<InventoryItem>();
         inventoryItem.InitialiseItem(item);
+
     }
 
     public Item GetSelectedItem(bool use)
@@ -242,6 +283,26 @@ public class InventoryManager : MonoBehaviour
         else
         {
             return null;
+        }
+    }
+
+    public void ChangeArms(Item item)
+    {
+        if(item == null)
+        {
+            for (int i = 0; i < arms.Length; i++)
+            {
+                arms[i].SetActive(false);
+            }
+        }
+
+        arms[item.itemNumber].SetActive(true);
+        for (int i = 0; i < arms.Length; i++)
+        {
+            if(i != item.itemNumber)
+            {
+                arms[i].SetActive(false);
+            }
         }
     }
 

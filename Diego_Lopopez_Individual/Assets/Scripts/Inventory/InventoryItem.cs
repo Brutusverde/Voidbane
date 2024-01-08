@@ -11,6 +11,7 @@ public class InventoryItem : MonoBehaviour
     public int count = 1;
     public Image image;
     public TextMeshProUGUI countText;
+    public GameObject arms;
 
     private void Start()
     {

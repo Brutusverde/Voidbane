@@ -7,4 +7,6 @@ public class Item : ScriptableObject
 {
     public Sprite image;
     public bool stackable = true;
+    public GameObject arms;
+    public int itemNumber;
 }

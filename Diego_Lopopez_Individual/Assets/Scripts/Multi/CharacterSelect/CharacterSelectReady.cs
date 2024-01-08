@@ -7,8 +7,9 @@ using System;
 public class CharacterSelectReady : NetworkBehaviour
 {
     public static CharacterSelectReady Instance { get; private set; }
-    public NetworkVariable<bool> schoolMap = new NetworkVariable<bool>();
+    public NetworkVariable<bool> level1Map = new NetworkVariable<bool>();
     public NetworkVariable<bool> mazeMap = new NetworkVariable<bool>();
+    public NetworkVariable<bool> puzzleMap = new NetworkVariable<bool>();
 
     private Dictionary<ulong, bool> playerReadyDictionary;
 
@@ -49,18 +50,22 @@ public class CharacterSelectReady : NetworkBehaviour
 
         if (allClientsReady)
         {
-            if(schoolMap.Value == true)
+            if(level1Map.Value == true)
             {
-                Loader.LoadNetwork(Loader.Scene.Test2);
+                Loader.LoadNetwork(Loader.Scene.Level1);
             }
             else if(mazeMap.Value == true)
             {
-                Loader.LoadNetwork(Loader.Scene.PruebaPrimerNivel);
+                Loader.LoadNetwork(Loader.Scene.Laberinto);
+            }
+            else if (puzzleMap.Value == true)
+            {
+                Loader.LoadNetwork(Loader.Scene.Puzzle);
             }
 
-            else if (schoolMap.Value == false && mazeMap.Value == false)
+            else if (level1Map.Value == false && mazeMap.Value == false && puzzleMap.Value == false)
             {
-                Loader.LoadNetwork(Loader.Scene.Test2);
+                Loader.LoadNetwork(Loader.Scene.Level1);
             }
 
         }
@@ -84,18 +89,22 @@ public class CharacterSelectReady : NetworkBehaviour
 
         if (allClientsReady)
         {
-            if (schoolMap.Value == true)
+            if (level1Map.Value == true)
             {
-                Loader.LoadNetwork(Loader.Scene.Test2);
+                Loader.LoadNetwork(Loader.Scene.Level1);
             }
             else if (mazeMap.Value == true)
             {
-                Loader.LoadNetwork(Loader.Scene.Test3);
+                Loader.LoadNetwork(Loader.Scene.Laberinto);
+            }
+            else if (puzzleMap.Value == true)
+            {
+                Loader.LoadNetwork(Loader.Scene.Puzzle);
             }
 
-            else if (schoolMap.Value == false && mazeMap.Value == false)
+            else if (level1Map.Value == false && mazeMap.Value == false && puzzleMap.Value == false)
             {
-                Loader.LoadNetwork(Loader.Scene.Test2);
+                Loader.LoadNetwork(Loader.Scene.Level1);
             }
 
         }

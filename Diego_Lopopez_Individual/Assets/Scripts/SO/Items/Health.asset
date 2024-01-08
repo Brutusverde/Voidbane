@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 6b4cb88d4bbc8704bbe596aa3efb6986, type: 3}
   stackable: 0
+  arms: {fileID: 0}
+  itemNumber: 2

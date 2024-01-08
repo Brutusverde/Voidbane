@@ -45,6 +45,7 @@ public class Interact : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
+            GlobalInteract();
             InteractWithGen();
             InteractWithObject();
             InteractWithOil();
@@ -407,4 +408,33 @@ public class Interact : NetworkBehaviour
 
     #endregion
 
+    #region Global interaction
+
+    private void GlobalInteract()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDist))
+        {
+            if(hit.collider.TryGetComponent(out IInteractive Interactivo))
+            {
+                GlobalInteractServerRPC(cam.transform.forward);
+                //Interactivo.Use();
+            }
+        }
+    }
+
+
+    [ServerRpc(RequireOwnership = false)]
+    private void GlobalInteractServerRPC(Vector3 rotation)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(cam.transform.position, rotation, out hit, maxDist))
+        {
+            if (hit.collider.TryGetComponent(out IInteractive Interactivo))
+            {
+                Interactivo.Use();
+            }
+        }
+    }
+    #endregion
 }

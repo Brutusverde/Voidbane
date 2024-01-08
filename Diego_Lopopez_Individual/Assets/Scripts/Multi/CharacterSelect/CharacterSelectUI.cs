@@ -6,13 +6,19 @@ using Unity.Netcode;
 
 public class CharacterSelectUI : NetworkBehaviour
 {
-
+    [Header("Opciones")]
     public Button readyButton;
     public Button mainMenuButton;
-    public Button schoolButton;
+
+    [Header("Niveles")]
+    public Button level1Button;
     public Button mazeButton;
+    public Button puzzleButton;
+
+    [Header("Colores")]
     public Color color;
     public Color firstColor;
+
     private bool isReady;
 
     // Start is called before the first frame update
@@ -21,8 +27,9 @@ public class CharacterSelectUI : NetworkBehaviour
     {
         if (!IsHost)
         {
-            schoolButton.gameObject.SetActive(false);
+            level1Button.gameObject.SetActive(false);
             mazeButton.gameObject.SetActive(false);
+            puzzleButton.gameObject.SetActive(false);
         }
     }
 
@@ -56,20 +63,34 @@ public class CharacterSelectUI : NetworkBehaviour
             
         });
 
-        schoolButton.onClick.AddListener(() =>
+        level1Button.onClick.AddListener(() =>
         {
-            CharacterSelectReady.Instance.schoolMap.Value = true;
+            CharacterSelectReady.Instance.level1Map.Value = true;
             CharacterSelectReady.Instance.mazeMap.Value = false;
-            schoolButton.GetComponent<Image>().color = color;
+            CharacterSelectReady.Instance.puzzleMap.Value = false;
+            level1Button.GetComponent<Image>().color = color;
             mazeButton.GetComponent<Image>().color = firstColor;
+            puzzleButton.GetComponent<Image>().color = firstColor;
         });
 
         mazeButton.onClick.AddListener(() =>
         {
-            CharacterSelectReady.Instance.schoolMap.Value = false;
+            CharacterSelectReady.Instance.level1Map.Value = false;
             CharacterSelectReady.Instance.mazeMap.Value = true;
-            schoolButton.GetComponent<Image>().color = firstColor;
+            CharacterSelectReady.Instance.puzzleMap.Value = false;
+            level1Button.GetComponent<Image>().color = firstColor;
             mazeButton.GetComponent<Image>().color = color;
+            puzzleButton.GetComponent<Image>().color = firstColor;
+        });
+
+        puzzleButton.onClick.AddListener(() =>
+        {
+            CharacterSelectReady.Instance.level1Map.Value = false;
+            CharacterSelectReady.Instance.mazeMap.Value = false;
+            CharacterSelectReady.Instance.puzzleMap.Value = true;
+            level1Button.GetComponent<Image>().color = firstColor;
+            mazeButton.GetComponent<Image>().color = firstColor;
+            puzzleButton.GetComponent<Image>().color = color;
         });
     }
 }

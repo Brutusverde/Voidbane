@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2184362187180608145}
   - component: {fileID: 2635881661918567405}
+  - component: {fileID: -2101030188447869036}
   m_Layer: 0
   m_Name: TestRelay
   m_TagString: Untagged
@@ -45,8 +46,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyText: {fileID: 0}
-  button1: {fileID: 0}
-  button2: {fileID: 0}
-  cam: {fileID: 0}
+  key: 
   keyUI: {fileID: 0}
   inputField: {fileID: 0}
+  playerColorList: []
+--- !u!114 &-2101030188447869036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4405412061824078133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1

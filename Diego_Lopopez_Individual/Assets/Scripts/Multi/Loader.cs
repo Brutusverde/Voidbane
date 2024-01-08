@@ -9,13 +9,12 @@ public static class Loader
     public enum Scene
     {
         MainMenuScene,
-        Test2,
-        Test3,
-        Test3_1,
         LoadingScene,
         LobbyScene,
         CharacterSelectScene,
-        PruebaPrimerNivel,
+        Level1,
+        Puzzle,
+        Laberinto,
     }
 
     private static Scene targetScene;
