@@ -9,6 +9,7 @@ public class CharacterSelectUI : NetworkBehaviour
     [Header("Opciones")]
     public Button readyButton;
     public Button mainMenuButton;
+    public Button lobbySettingsButton;
 
     [Header("Niveles")]
     public Button level1Button;
@@ -30,6 +31,8 @@ public class CharacterSelectUI : NetworkBehaviour
             level1Button.gameObject.SetActive(false);
             mazeButton.gameObject.SetActive(false);
             puzzleButton.gameObject.SetActive(false);
+
+            lobbySettingsButton.gameObject.SetActive(false);
         }
     }
 

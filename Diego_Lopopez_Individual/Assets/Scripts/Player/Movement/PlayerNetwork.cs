@@ -74,7 +74,22 @@ public class PlayerNetwork : NetworkBehaviour
         rb.freezeRotation = true;
         readyToJump = true;
         speed = moveSpeed;
+
+        if (IsServer)
+        {
+            NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_OnClientDisconnectCallback;
+        }
     }
+
+    private void NetworkManager_OnClientDisconnectCallback(ulong clientId)
+    {
+        if(clientId == OwnerClientId)
+        {
+            //
+        }
+    }
+
+
 
     private void Start()
     {

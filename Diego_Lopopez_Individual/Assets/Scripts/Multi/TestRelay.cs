@@ -178,15 +178,27 @@ public class TestRelay : NetworkBehaviour
 
     public void StartClient()
     {
-        NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback;
+        //NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback;
 
         NetworkManager.Singleton.StartClient();
         Loader.LoadNetwork(Loader.Scene.CharacterSelectScene);
     }
 
-    private void NetworkManager_Client_OnClientDisconnectCallback(ulong clientId)
+    //private void NetworkManager_Client_OnClientDisconnectCallback(ulong clientId)
+    //{
+    //    OnFailedToJoinGame?.Invoke(this, EventArgs.Empty);
+    //}
+
+    private void NetworkManager_Server_OnClientDisconnectCallback(ulong clientId)
     {
-        throw new NotImplementedException();
+        for (int i = 0; i < playerDataNetworkList.Count; i++)
+        {
+            PlayerData playerData = playerDataNetworkList[i];
+            if(playerData.clientId == clientId)
+            {
+                playerDataNetworkList.RemoveAt(i);
+            }
+        }
     }
     #endregion
 
@@ -285,5 +297,6 @@ public class TestRelay : NetworkBehaviour
     public void KickPlayer(ulong clientId)
     {
         NetworkManager.Singleton.DisconnectClient(clientId);
+        NetworkManager_Server_OnClientDisconnectCallback(clientId);
     }
 }
