@@ -130,6 +130,10 @@ MonoBehaviour:
       bounds:
         m_Center: {x: 0, y: 0, z: 0}
         m_Extent: {x: 24.300001, y: 24.300001, z: 48.600002}
+    - sceneGUID: e70143788065aa24293a096a8f4e2c69
+      bounds:
+        m_Center: {x: 0, y: 0, z: 0}
+        m_Extent: {x: 24.300001, y: 24.300001, z: 24.300001}
     serializedHasVolumes:
     - sceneGUID: 8124e5870f4fd4c779e7a5f994e84ad1
       hasProbeVolumes: 0
