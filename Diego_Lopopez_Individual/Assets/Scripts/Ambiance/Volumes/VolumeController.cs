@@ -11,14 +11,14 @@ public class VolumeController : MonoBehaviour
     public Volume volume;
     public PlayerOptions playerOptions;
 
-    private GlobalIllumination globalIlumination;
+    //private GlobalIllumination globalIlumination;
     private Bloom bloom;
     private ScreenSpaceAmbientOcclusion AO;
     private Fog fog;
     private ScreenSpaceReflection SSR;
 
 
-    public bool SSGI_Active;
+    //public bool SSGI_Active;
     public bool bloom_Active;
     public bool AO_Active;
     public bool fog_Active;
@@ -28,7 +28,7 @@ public class VolumeController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        volume.profile.TryGet<GlobalIllumination>(out globalIlumination);
+        //volume.profile.TryGet<GlobalIllumination>(out globalIlumination);
         volume.profile.TryGet<Bloom>(out bloom);
         volume.profile.TryGet<ScreenSpaceAmbientOcclusion>(out AO);
         volume.profile.TryGet<Fog>(out fog);
@@ -40,17 +40,17 @@ public class VolumeController : MonoBehaviour
     void Update()
     {
         //Global ilumination
-        SSGI_Active = playerOptions.SSGI;
+        //SSGI_Active = playerOptions.SSGI;
 
-        if(SSGI_Active == true)
-        {
-            globalIlumination.active = true;
-        }
+        //if(SSGI_Active == true)
+        //{
+        //    globalIlumination.active = true;
+        //}
 
-        if (SSGI_Active == false)
-        {
-            globalIlumination.active = false;
-        }
+        //if (SSGI_Active == false)
+        //{
+        //    globalIlumination.active = false;
+        //}
 
         //Bloom
         bloom_Active = playerOptions.Bloom;

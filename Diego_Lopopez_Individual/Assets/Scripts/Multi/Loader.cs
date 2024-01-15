@@ -15,6 +15,7 @@ public static class Loader
         Level1,
         Puzzle,
         Laberinto,
+        LevelRun,
     }
 
     private static Scene targetScene;

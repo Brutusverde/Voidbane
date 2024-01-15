@@ -14,7 +14,7 @@ public class PauseMenuController : NetworkBehaviour
     public InventoryManager inventoryManager;
 
     [Header("Buttons")]
-    public Button SSGIButton;
+    //public Button SSGIButton;
     public Button BloomButton;
     public Button AOButton;
     public Button FogButton;
@@ -81,19 +81,19 @@ public class PauseMenuController : NetworkBehaviour
 
 
     #region Toggles
-    public void togleSSGI()
-    {
-        if (options.SSGI == true)
-        {
-            options.SSGI = false;
-            checkState();
-        }
-        else
-        {
-            options.SSGI = true;
-            checkState();
-        }
-    }
+    //public void togleSSGI()
+    //{
+    //    if (options.SSGI == true)
+    //    {
+    //        options.SSGI = false;
+    //        checkState();
+    //    }
+    //    else
+    //    {
+    //        options.SSGI = true;
+    //        checkState();
+    //    }
+    //}
 
     public void togleBloom()
     {
@@ -155,15 +155,15 @@ public class PauseMenuController : NetworkBehaviour
     #region Check state
     public void checkState()
     {
-        //State for SSGI
-        if (options.SSGI == true)
-        {
-            SSGIButton.GetComponent<Image>().color = color1;
-        }
-        if (options.SSGI == false)
-        {
-            SSGIButton.GetComponent<Image>().color = color2;
-        }
+        ////State for SSGI
+        //if (options.SSGI == true)
+        //{
+        //    SSGIButton.GetComponent<Image>().color = color1;
+        //}
+        //if (options.SSGI == false)
+        //{
+        //    SSGIButton.GetComponent<Image>().color = color2;
+        //}
 
         //State for Bloom
         if (options.Bloom == true)
