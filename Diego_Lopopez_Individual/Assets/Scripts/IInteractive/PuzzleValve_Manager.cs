@@ -12,9 +12,13 @@ public class PuzzleValve_Manager : NetworkBehaviour
 
     public GameObject water;
     public GameObject doorLock;
+    public GameObject floorWater;
+    public Animator doorAnim;
 
     public float waterSpeed;
     public float valveSpeed;
+
+    private bool playAnim;
 
 
 
@@ -64,6 +68,10 @@ public class PuzzleValve_Manager : NetworkBehaviour
         {
             waterSpeed = valveSpeed * -50;
             doorLock.SetActive(false);
+            floorWater.SetActive(false);
+
+            doorAnim.SetBool("Open", true);
+            //doorAnim.SetBool("Close", false);
         }
     }
 }
