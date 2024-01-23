@@ -10,6 +10,10 @@ public class LightTurn : NetworkBehaviour
 
     public Light _light;
     public MeshRenderer  lightBase;
+
+    public MeshRenderer light1;
+    public MeshRenderer light2;
+
     private LightController lc;
 
     private GameObject volume;
@@ -34,6 +38,7 @@ public class LightTurn : NetworkBehaviour
                 volume.transform.gameObject.SetActive(true);
                 matArray[2] = lightController.materialOff;
                 lightBase.materials = matArray;
+                lightController.LightsOn = false;
             }
             else
             {
@@ -42,6 +47,7 @@ public class LightTurn : NetworkBehaviour
                 volume.transform.gameObject.SetActive(false);
                 matArray[2] = lightController.materialOn;
                 lightBase.materials = matArray;
+                lightController.LightsOn = true;
             }
         }
         

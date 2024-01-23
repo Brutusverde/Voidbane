@@ -128,8 +128,8 @@ MonoBehaviour:
         m_Extent: {x: 24.300001, y: 24.300001, z: 48.600002}
     - sceneGUID: f39f8896e63112041ada61f49686b906
       bounds:
-        m_Center: {x: 0, y: 0, z: 0}
-        m_Extent: {x: 24.300001, y: 24.300001, z: 48.600002}
+        m_Center: {x: -12.15, y: 0, z: 0}
+        m_Extent: {x: 12.15, y: 24.300001, z: 24.300001}
     - sceneGUID: e70143788065aa24293a096a8f4e2c69
       bounds:
         m_Center: {x: 0, y: 0, z: 0}

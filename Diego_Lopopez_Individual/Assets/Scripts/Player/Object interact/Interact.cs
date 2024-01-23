@@ -27,6 +27,7 @@ public class Interact : NetworkBehaviour
     //Player components
     public PlayerNetwork playerNetwork;
     public Rigidbody rb;
+    public GameObject playerBody;
 
     //Capsule components
     public CapsuleCollider capsuleCollider;
@@ -51,6 +52,7 @@ public class Interact : NetworkBehaviour
             InteractWithOil();
             InteractWithLocker();
             InteractWithDoor();
+            InteractWithSlider();
         }
     }
 
@@ -436,5 +438,91 @@ public class Interact : NetworkBehaviour
             }
         }
     }
+    #endregion
+
+
+
+
+    #region Slider interaction
+    public void InteractWithSlider ()
+    {
+        if (!IsOwner) return;
+
+        //Input for locker interaction
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDist))
+            {
+                if (hit.transform.GetComponent<SliderBehaviour>())
+                {
+                    
+                    sliderServerRPC(cam.transform.forward);
+                    SliderBehaviour slider = hit.transform.GetComponent<SliderBehaviour>();
+
+                    //This is for visuals on clients side
+
+                    //If you are the host
+                    if (IsHost)
+                    {
+                        //Locker is full, put player outside
+                        if (slider.SliderFull.Value == true)
+                        {
+                            playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                        }
+
+                        //Locker is empty, put player inside
+                        if (slider.SliderFull.Value == false)
+                        {
+                            playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                        }
+                    }
+
+                    //If you are the client
+                    if (!IsHost)
+                    {
+                        //Locker is full, put player outside
+                        if (slider.SliderFull.Value == false)
+                        {
+                            playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                        }
+
+                        //Locker is empty, put player inside
+                        if (slider.SliderFull.Value == true)
+                        {
+                            playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    //Server RPC for locker 
+    [ServerRpc(RequireOwnership = false)]
+    private void sliderServerRPC(Vector3 rotation)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(cam.transform.position, rotation, out hit, maxDist))
+        {
+            if (hit.transform.GetComponent<SliderBehaviour>())
+            {
+                //Locker is full, put player outside
+                SliderBehaviour slider = hit.transform.GetComponent<SliderBehaviour>();
+                if (slider.SliderFull.Value == false)
+                {
+                    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                }
+
+
+                //Locker is empty, put player inside
+                else if (slider.SliderFull.Value == true)
+                {
+                    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                }
+            }
+        }
+    }
+
     #endregion
 }

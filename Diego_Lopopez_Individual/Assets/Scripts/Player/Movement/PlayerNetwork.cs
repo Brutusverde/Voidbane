@@ -16,7 +16,7 @@ public class PlayerNetwork : NetworkBehaviour
     public float groundDrag;
 
     [Header("Ground check")]
-    private float playerHeight = 2.1f;
+    private float playerHeight = 2f;
     public LayerMask whatIsGround;
     public bool grounded;
     public LayerMask whatIsWater;

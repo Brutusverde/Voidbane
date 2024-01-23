@@ -9,21 +9,21 @@ public class UINetwork : NetworkBehaviour
 {
     public Slider hpSlider;
     public Slider staminaSlider;
-    public Slider sanitySlider;
+    //public Slider sanitySlider;
     public PlayerNetwork playerNetwork;
     public TextMeshProUGUI hpText;
-    public TextMeshProUGUI sanityText;
+    //public TextMeshProUGUI sanityText;
 
     public override void OnNetworkSpawn()
     {
         if (!IsOwner)
         {
             hpText.gameObject.SetActive(false);
-            sanityText.gameObject.SetActive(false);
+            //sanityText.gameObject.SetActive(false);
 
             hpSlider.gameObject.SetActive(false);
             staminaSlider.gameObject.SetActive(false);
-            sanitySlider.gameObject.SetActive(false);
+            //sanitySlider.gameObject.SetActive(false);
         }
     }
 
@@ -34,9 +34,9 @@ public class UINetwork : NetworkBehaviour
         if (!IsOwner) return;
         hpSlider.value = playerNetwork.HealthPoint.Value;
         staminaSlider.value = playerNetwork.StaminaPoint.Value;
-        sanitySlider.value = playerNetwork.SanityPoint.Value;
+        //sanitySlider.value = playerNetwork.SanityPoint.Value;
 
         hpText.text = Mathf.Round(playerNetwork.HealthPoint.Value).ToString();
-        sanityText.text = Mathf.Round(playerNetwork.SanityPoint.Value).ToString();
+        //sanityText.text = Mathf.Round(playerNetwork.SanityPoint.Value).ToString();
     }
 }
