@@ -7,7 +7,7 @@ public class SliderBehaviour : NetworkBehaviour
 {
     public NetworkVariable<bool> SliderFull = new NetworkVariable<bool>();
     public NetworkVariable<bool> SomeoneHere = new NetworkVariable<bool>();
-    public GameObject armor;
+    //public GameObject armor;
     public Transform cameraPoint;
     public Transform bodyPoint;
 
@@ -17,20 +17,20 @@ public class SliderBehaviour : NetworkBehaviour
     {
         base.OnNetworkSpawn();
         SliderFull.Value = false;
-        armor.SetActive(false);
+        //armor.SetActive(false);
     }
 
-    private void Update()
-    {
-        if (SliderFull.Value == true)
-        {
-            armor.SetActive(true);
-        }
-        else
-        {
-            armor.SetActive(false);
-        }
-    }
+    //private void Update()
+    //{
+    //    if (SliderFull.Value == true)
+    //    {
+    //        armor.SetActive(true);
+    //    }
+    //    else
+    //    {
+    //        armor.SetActive(false);
+    //    }
+    //}
 
 
 

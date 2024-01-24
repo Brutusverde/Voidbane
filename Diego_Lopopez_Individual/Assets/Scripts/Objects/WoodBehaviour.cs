@@ -46,7 +46,10 @@ public class WoodBehaviour : NetworkBehaviour, IInteractive
         fireObj.SetActive(false);
         isOnFire = false;
         turnOnFire.Value = false;
-        this.gameObject.SetActive(false);
+        killServerRPC();
+        Destroy(this.gameObject);
+        
+        //this.gameObject.SetActive(false);
 
         col.isTrigger = true;
     }
@@ -61,6 +64,13 @@ public class WoodBehaviour : NetworkBehaviour, IInteractive
             Item receivedItem = InventoryManager.instance.GetSelectedItem(true);
             fireOn();
         }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void killServerRPC()
+    {
+        NetworkObject.Destroy(this.gameObject);
+        NetworkObject.Despawn(this.gameObject);
     }
 }
 

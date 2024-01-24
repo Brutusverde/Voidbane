@@ -465,33 +465,40 @@ public class Interact : NetworkBehaviour
                     //If you are the host
                     if (IsHost)
                     {
-                        //Locker is full, put player outside
-                        if (slider.SliderFull.Value == true)
-                        {
-                            playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
-                        }
+                        playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                        //slider.armor.SetActive(false);
+                        ////Locker is full, put player outside
+                        //if (slider.SliderFull.Value == true)
+                        //{
+                        //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                        //    slider.armor.SetActive(false);
+                        //}
 
-                        //Locker is empty, put player inside
-                        if (slider.SliderFull.Value == false)
-                        {
-                            playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
-                        }
+                        ////Locker is empty, put player inside
+                        //if (slider.SliderFull.Value == false)
+                        //{
+                        //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                        //    slider.armor.SetActive(false);
+                        //}
                     }
 
                     //If you are the client
                     if (!IsHost)
                     {
-                        //Locker is full, put player outside
-                        if (slider.SliderFull.Value == false)
-                        {
-                            playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
-                        }
+                        playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                        //slider.armor.SetActive(false);
+                        ////Locker is full, put player outside
+                        //if (slider.SliderFull.Value == false)
+                        //{
 
-                        //Locker is empty, put player inside
-                        if (slider.SliderFull.Value == true)
-                        {
-                            playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
-                        }
+                        //}
+
+                        ////Locker is empty, put player inside
+                        //if (slider.SliderFull.Value == true)
+                        //{
+                        //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                        //    slider.armor.SetActive(false);
+                        //}
                     }
                 }
             }
@@ -507,19 +514,23 @@ public class Interact : NetworkBehaviour
         {
             if (hit.transform.GetComponent<SliderBehaviour>())
             {
-                //Locker is full, put player outside
                 SliderBehaviour slider = hit.transform.GetComponent<SliderBehaviour>();
-                if (slider.SliderFull.Value == false)
-                {
-                    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
-                }
+                playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                //slider.armor.SetActive(false);
+                ////Locker is full, put player outside
+                //SliderBehaviour slider = hit.transform.GetComponent<SliderBehaviour>();
+                //if (slider.SliderFull.Value == false)
+                //{
+
+                //}
 
 
-                //Locker is empty, put player inside
-                else if (slider.SliderFull.Value == true)
-                {
-                    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
-                }
+                ////Locker is empty, put player inside
+                //else if (slider.SliderFull.Value == true)
+                //{
+                //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                //    slider.armor.SetActive(false);
+                //}
             }
         }
     }
