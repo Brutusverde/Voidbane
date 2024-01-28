@@ -50,6 +50,8 @@ public class LightTurn : NetworkBehaviour
                 lightController.LightsOn = true;
             }
         }
+
+
         
     }
 }

@@ -245,6 +245,7 @@ public class PlayerNetwork : NetworkBehaviour
     private void Update()
     {
         if (!IsOwner) return;
+        TurnOffBody();
         myInput();
         speedControl();
         MovePlayer();
@@ -317,5 +318,11 @@ public class PlayerNetwork : NetworkBehaviour
     private void ResetJump()
     {
         readyToJump = true;
+    }
+
+    private void TurnOffBody()
+    {
+        surface.gameObject.SetActive(false);
+        joints.gameObject.SetActive(false);
     }
 }

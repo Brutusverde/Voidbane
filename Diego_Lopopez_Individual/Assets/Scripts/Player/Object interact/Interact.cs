@@ -32,6 +32,7 @@ public class Interact : NetworkBehaviour
     //Capsule components
     public CapsuleCollider capsuleCollider;
     public Animator animator;
+    public Animator animatorBody;
 
     [Header("Crosshair")]
 
@@ -252,6 +253,7 @@ public class Interact : NetworkBehaviour
                             capsuleCollider.isTrigger = false;
                             //Play animation
                             animator.SetBool("TurnOff", false);
+                            animatorBody.SetBool("TurnOff", false);
                             //Move camera to player body
                             cam.transform.SetPositionAndRotation(cameraHolder.position, cameraHolder.rotation);
 
@@ -272,6 +274,7 @@ public class Interact : NetworkBehaviour
                             capsuleCollider.isTrigger = true;
                             //Play animation
                             animator.SetBool("TurnOff", true);
+                            animatorBody.SetBool("TurnOff", true);
                             //Move camera to player body
                             cam.transform.SetPositionAndRotation(locker.cameraPoint.position, locker.cameraPoint.rotation);
 
@@ -297,6 +300,7 @@ public class Interact : NetworkBehaviour
                             capsuleCollider.isTrigger = false;
                             //Play animation
                             animator.SetBool("TurnOff", false);
+                            animatorBody.SetBool("TurnOff", false);
                             //Move camera to player body
                             cam.transform.SetPositionAndRotation(cameraHolder.position, cameraHolder.rotation);
 
@@ -317,6 +321,7 @@ public class Interact : NetworkBehaviour
                             capsuleCollider.isTrigger = true;
                             //Play animation
                             animator.SetBool("TurnOff", true);
+                            animatorBody.SetBool("TurnOff", true);
                             //Move camera to player body
                             cam.transform.SetPositionAndRotation(locker.cameraPoint.position, locker.cameraPoint.rotation);
 
@@ -353,6 +358,7 @@ public class Interact : NetworkBehaviour
                     capsuleCollider.isTrigger = false;
                     //Play animation
                     animator.SetBool("TurnOff", false);
+                    animatorBody.SetBool("TurnOff", false);
                     //Move camera to player body
                     cam.transform.SetPositionAndRotation(cameraHolder.position, cameraHolder.rotation);
                     locker.LockerFull.Value = false;
@@ -375,6 +381,7 @@ public class Interact : NetworkBehaviour
                     capsuleCollider.isTrigger = true;
                     //Play animation
                     animator.SetBool("TurnOff", true);
+                    animatorBody.SetBool("TurnOff", true);
                     //Move camera to player body
                     cam.transform.SetPositionAndRotation(locker.cameraPoint.position, locker.cameraPoint.rotation);
                     locker.LockerFull.Value = true;
