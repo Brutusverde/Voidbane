@@ -56,7 +56,7 @@ public class CharacterSelectReady : NetworkBehaviour
             }
             else if(mazeMap.Value == true)
             {
-                Loader.LoadNetwork(Loader.Scene.LevelRun);
+                Loader.LoadNetwork(Loader.Scene.Laberinto);
             }
             else if (puzzleMap.Value == true)
             {
