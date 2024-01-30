@@ -5,10 +5,10 @@ using Unity.Netcode;
 
 public class SliderBehaviour : NetworkBehaviour
 {
-    public NetworkVariable<bool> SliderFull = new NetworkVariable<bool>();
-    public NetworkVariable<bool> SomeoneHere = new NetworkVariable<bool>();
+    //public NetworkVariable<bool> SliderFull = new NetworkVariable<bool>();
+    //public NetworkVariable<bool> SomeoneHere = new NetworkVariable<bool>();
     //public GameObject armor;
-    public Transform cameraPoint;
+    //public Transform cameraPoint;
     public Transform bodyPoint;
 
 
@@ -16,7 +16,7 @@ public class SliderBehaviour : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        SliderFull.Value = false;
+        //SliderFull.Value = false;
         //armor.SetActive(false);
     }
 
