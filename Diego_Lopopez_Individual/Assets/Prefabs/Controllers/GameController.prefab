@@ -45,20 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d852574f9910c9f43b70a6fbda210341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lights:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  lightInt: 100000
-  emissiveOn: 300
-  probe: {fileID: 0}
+  lightController: {fileID: 0}
   volume: {fileID: 0}
   countDownFull: 20
   CountDown:
     m_InternalValue: 0
   text: {fileID: 0}
-  gen: {fileID: 0}
 --- !u!114 &2403075117357419711
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ public class Level1_Fire : NetworkBehaviour
         if (other.CompareTag("Player"))
         {
             offFireServerRPC();
+            fire.SetActive(false);
         }
     }
 

@@ -466,47 +466,48 @@ public class Interact : NetworkBehaviour
                     
                     sliderServerRPC(cam.transform.forward);
                     SliderBehaviour slider = hit.transform.GetComponent<SliderBehaviour>();
+                    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
 
                     //This is for visuals on clients side
 
-                    //If you are the host
-                    //if (IsHost)
-                    //{
-                    //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
-                    //    //slider.armor.SetActive(false);
-                    //    ////Locker is full, put player outside
-                    //    //if (slider.SliderFull.Value == true)
-                    //    //{
-                    //    //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
-                    //    //    slider.armor.SetActive(false);
-                    //    //}
+                //If you are the host
+                //if (IsHost)
+                //{
+                //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                //    //slider.armor.SetActive(false);
+                //    ////Locker is full, put player outside
+                //    //if (slider.SliderFull.Value == true)
+                //    //{
+                //    //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                //    //    slider.armor.SetActive(false);
+                //    //}
 
-                    //    ////Locker is empty, put player inside
-                    //    //if (slider.SliderFull.Value == false)
-                    //    //{
-                    //    //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
-                    //    //    slider.armor.SetActive(false);
-                    //    //}
-                    //}
+                //    ////Locker is empty, put player inside
+                //    //if (slider.SliderFull.Value == false)
+                //    //{
+                //    //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                //    //    slider.armor.SetActive(false);
+                //    //}
+                //}
 
-                    ////If you are the client
-                    //if (!IsHost)
-                    //{
-                    //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
-                    //    //slider.armor.SetActive(false);
-                    //    ////Locker is full, put player outside
-                    //    //if (slider.SliderFull.Value == false)
-                    //    //{
+                ////If you are the client
+                //if (!IsHost)
+                //{
+                //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                //    //slider.armor.SetActive(false);
+                //    ////Locker is full, put player outside
+                //    //if (slider.SliderFull.Value == false)
+                //    //{
 
-                    //    //}
+                //    //}
 
-                    //    ////Locker is empty, put player inside
-                    //    //if (slider.SliderFull.Value == true)
-                    //    //{
-                    //    //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
-                    //    //    slider.armor.SetActive(false);
-                    //    //}
-                    //}
+                //    ////Locker is empty, put player inside
+                //    //if (slider.SliderFull.Value == true)
+                //    //{
+                //    //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                //    //    slider.armor.SetActive(false);
+                //    //}
+                //}
                 }
             }
         //}
