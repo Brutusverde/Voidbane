@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   materialOn: {fileID: 2100000, guid: 92c9ce581486e9e42b431f67c242728c, type: 2}
   materialOff: {fileID: 2100000, guid: e7c724b4fa6caf3468976f116cd5525e, type: 2}
+  materialRed: {fileID: 2100000, guid: f7321f9ad965f1f4e8b7ad5132d3b825, type: 2}
   LightsOn: 1
+  LighIsRed: 0
   lightOnInt: 100000

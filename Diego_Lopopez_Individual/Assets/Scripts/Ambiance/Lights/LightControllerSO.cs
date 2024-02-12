@@ -8,7 +8,9 @@ public class LightControllerSO : ScriptableObject
 {
     public Material materialOn;
     public Material materialOff;
+    public Material materialRed;
     public bool LightsOn;
+    public bool LighIsRed;
 
     public float lightOnInt;
 }

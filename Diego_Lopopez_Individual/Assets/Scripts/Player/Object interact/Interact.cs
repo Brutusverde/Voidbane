@@ -40,6 +40,14 @@ public class Interact : NetworkBehaviour
     public Vector3 small;
     public Vector3 big;
 
+    [Header("Audio")]
+    //Door
+    public AudioClip doorOpen;
+    public AudioClip doorClose;
+
+    //Objects
+    public AudioClip objectPick;
+
 
     private void Update()
     {
@@ -193,6 +201,7 @@ public class Interact : NetworkBehaviour
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDist))
         {
             ObjectBehaviour tryItem = hit.transform.GetComponent<ObjectBehaviour>();
+            AudioSource audioSource = hit.transform.GetComponent<AudioSource>();
             if (tryItem)
             {
                 item = hit.transform.GetComponent<ObjectBehaviour>().item;
@@ -207,7 +216,9 @@ public class Interact : NetworkBehaviour
                     //}
                     
                     hit.transform.GetComponent<ObjectBehaviour>().InteractWithObject();
-                    
+                    audioSource.clip = objectPick;
+                    audioSource.Play();
+
                     InventoryManager.instance.AddItem(item);
                 } 
             }  
@@ -401,16 +412,21 @@ public class Interact : NetworkBehaviour
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDist))
         {
             DoorBehaviour Door = hit.transform.GetComponentInParent<DoorBehaviour>();
+            AudioSource audioSource = hit.transform.GetComponentInParent<AudioSource>();
             if (!Door) return;
 
             if (Door.doorOpen.Value == false)
             {
                 Door.OpenDoorServerRPC();
+                audioSource.clip = doorOpen;
+                audioSource.Play();
             }
 
             else if (Door.doorOpen.Value == true)
             {
                 Door.CloseDoorServerRPC();
+                audioSource.clip = doorClose;
+                audioSource.Play();
             }
         }
     }
@@ -454,63 +470,18 @@ public class Interact : NetworkBehaviour
     public void InteractWithSlider ()
     {
         if (!IsOwner) return;
-
-        //Input for locker interaction
-        //if (Input.GetKeyDown(KeyCode.E))
-        //{
-            RaycastHit hit;
-            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDist))
+        RaycastHit hit;
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDist))
+        {
+            if (hit.transform.GetComponent<SliderBehaviour>())
             {
-                if (hit.transform.GetComponent<SliderBehaviour>())
-                {
                     
-                    sliderServerRPC(cam.transform.forward);
-                    SliderBehaviour slider = hit.transform.GetComponent<SliderBehaviour>();
-                    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
+                sliderServerRPC(cam.transform.forward);
+                SliderBehaviour slider = hit.transform.GetComponent<SliderBehaviour>();
+                playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
 
-                    //This is for visuals on clients side
-
-                //If you are the host
-                //if (IsHost)
-                //{
-                //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
-                //    //slider.armor.SetActive(false);
-                //    ////Locker is full, put player outside
-                //    //if (slider.SliderFull.Value == true)
-                //    //{
-                //    //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
-                //    //    slider.armor.SetActive(false);
-                //    //}
-
-                //    ////Locker is empty, put player inside
-                //    //if (slider.SliderFull.Value == false)
-                //    //{
-                //    //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
-                //    //    slider.armor.SetActive(false);
-                //    //}
-                //}
-
-                ////If you are the client
-                //if (!IsHost)
-                //{
-                //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
-                //    //slider.armor.SetActive(false);
-                //    ////Locker is full, put player outside
-                //    //if (slider.SliderFull.Value == false)
-                //    //{
-
-                //    //}
-
-                //    ////Locker is empty, put player inside
-                //    //if (slider.SliderFull.Value == true)
-                //    //{
-                //    //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
-                //    //    slider.armor.SetActive(false);
-                //    //}
-                //}
-                }
             }
-        //}
+        }
     }
 
     //Server RPC for locker 
@@ -524,21 +495,6 @@ public class Interact : NetworkBehaviour
             {
                 SliderBehaviour slider = hit.transform.GetComponent<SliderBehaviour>();
                 playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
-                //slider.armor.SetActive(false);
-                ////Locker is full, put player outside
-                //SliderBehaviour slider = hit.transform.GetComponent<SliderBehaviour>();
-                //if (slider.SliderFull.Value == false)
-                //{
-
-                //}
-
-
-                ////Locker is empty, put player inside
-                //else if (slider.SliderFull.Value == true)
-                //{
-                //    playerBody.transform.position = new Vector3(slider.bodyPoint.position.x, playerBody.transform.position.y, slider.bodyPoint.position.z);
-                //    slider.armor.SetActive(false);
-                //}
             }
         }
     }

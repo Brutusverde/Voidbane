@@ -8,6 +8,9 @@ public class DoorBehaviour : NetworkBehaviour
 
     public NetworkVariable<bool> doorOpen = new NetworkVariable<bool>();
     public Animator animator;
+    //public AudioClip audioClip;
+    //public AudioClip audioClipClose;
+    //public AudioSource audioSource;
 
     private void Start()
     {
@@ -23,6 +26,7 @@ public class DoorBehaviour : NetworkBehaviour
         doorOpen.Value = true;
         animator.SetBool("Open", true);
         animator.SetBool("Close", false);
+
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -31,5 +35,7 @@ public class DoorBehaviour : NetworkBehaviour
         doorOpen.Value = false;
         animator.SetBool("Open", false);
         animator.SetBool("Close", true);
+        //audioSource.clip = audioClipClose;
+        //audioSource.Play();
     }
 }

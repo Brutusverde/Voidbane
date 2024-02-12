@@ -6,16 +6,20 @@ using UnityEngine;
 public class ObjectBehaviour : MonoBehaviour
 {
     public Item item;
+    public GameObject visual;
 
     public void InteractWithObject()
     {
-
-        Destroy(gameObject);
+        visual.SetActive(false);
+        Invoke(nameof(Destroy), 10);
     }
 
     [ServerRpc(RequireOwnership = false)]
     public void InteractWithObjectServerRPC()
     {
-        Destroy(gameObject);
+        visual.SetActive(false);
+        Invoke(nameof(Destroy), 10);
     }
+
+
 }
