@@ -18,6 +18,7 @@ public class CharacterSelectPlayer : MonoBehaviour
         {
             PlayerData playerData = TestRelay.Instance.GetPlayerDataFromPlayerIndex(playerIndex);
             TestRelay.Instance.KickPlayer(playerData.clientId);
+            TestRelay.Instance.Cleanup();
         });
     }
 

@@ -32,6 +32,8 @@ public class CharacterSelectUI : NetworkBehaviour
             mazeButton.gameObject.SetActive(false);
             puzzleButton.gameObject.SetActive(false);
 
+            
+
             lobbySettingsButton.gameObject.SetActive(false);
         }
     }
@@ -43,6 +45,9 @@ public class CharacterSelectUI : NetworkBehaviour
         mainMenuButton.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.Shutdown();
+            //while (NetworkManager.Singleton.ShutdownInProgress) ;
+            TestRelay.Instance.Cleanup();
+            
             Loader.LoadNetwork(Loader.Scene.LobbyScene);
 
         });
