@@ -32,12 +32,14 @@ public class GenBehaviour_Level1 : NetworkBehaviour
         lightController = GameObject.Find("GameController").GetComponent<LightController_Level1>();
         if (!IsHost) return;
         hasFuel.Value = true;
+        lightControllerSO.LightsOn = true;
+        lightControllerSO.LighIsRed = false;
     }
 
     private void Update()
     {
         if (!lightController) return;
-        if (lightController.SwitchGen.Value == false)
+        if (!lightControllerSO.LightsOn)
         {
             hasFuel.Value = false;
             lightMesh.material = materialOff;
@@ -51,6 +53,7 @@ public class GenBehaviour_Level1 : NetworkBehaviour
             lightComp.color = Color.green;
             animator.Play("GenOn");
             smoke.SetActive(true);
+            lightControllerSO.LighIsRed = false;
         }
     }
 }

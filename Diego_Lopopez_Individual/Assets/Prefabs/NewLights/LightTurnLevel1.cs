@@ -6,6 +6,7 @@ using Unity.Netcode;
 public class LightTurnLevel1 : NetworkBehaviour
 {
     public LightControllerSO lightController;
+    public FenceDoorSO fenceDoorSO;
     [Header("")]
 
     public Light _light;
@@ -29,19 +30,20 @@ public class LightTurnLevel1 : NetworkBehaviour
     {
         if (lc)
         {
-            if (lc.CountDown.Value <= 0)
+            if (!lightController.LightsOn)
             {
                 _light.intensity = 0;
                 light1.material = lightController.materialOff;
                 light2.material = lightController.materialOff;
-                lightController.LightsOn = false;
+                fenceDoorSO.canOpen = false;
+                
             }
             else
             {
                 _light.intensity = lightController.lightOnInt;
                 light1.material = lightController.materialOn;
                 light2.material = lightController.materialOn;
-                lightController.LightsOn = true;
+                fenceDoorSO.canOpen = true;
             }
 
             if (lightController.LighIsRed)
@@ -50,6 +52,7 @@ public class LightTurnLevel1 : NetworkBehaviour
                 _light.color = Color.red;
                 light1.material = lightController.materialRed;
                 light2.material = lightController.materialRed;
+                fenceDoorSO.lightWasRed = true;
             }
 
             if (lightController.LighIsRed == false)
@@ -58,7 +61,7 @@ public class LightTurnLevel1 : NetworkBehaviour
                 _light.intensity = lightController.lightOnInt;
                 light1.material = lightController.materialOn;
                 light2.material = lightController.materialOn;
-                lightController.LightsOn = true;
+
             }
         }
 

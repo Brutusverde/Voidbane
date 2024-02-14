@@ -22,14 +22,14 @@ public class GenBehaviour : NetworkBehaviour
 
     public NetworkVariable<bool> hasFuel = new NetworkVariable<bool>();
 
-    [HideInInspector] public LightController lightController;
+    [HideInInspector] public LightController_Level1 lightController;
 
 
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
 
-        lightController = GameObject.Find("GameController").GetComponent<LightController>();
+        lightController = GameObject.Find("GameController").GetComponent<LightController_Level1>();
         if (!IsHost) return;
         hasFuel.Value = false;
     }
@@ -37,7 +37,7 @@ public class GenBehaviour : NetworkBehaviour
     private void Update()
     {
         if (!lightController) return;
-        if (lightController.CountDown.Value <= 0)
+        if (!lightControllerSO.LightsOn)
         {
             hasFuel.Value = false;
             lightMesh.material = materialOff;

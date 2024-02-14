@@ -627,6 +627,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightController: {fileID: 11400000, guid: aacd30928c629044ca4e2d10313b7d59, type: 2}
+  fenceDoorSO: {fileID: 0}
   _light: {fileID: 2289784892805006004}
   light1: {fileID: 4163732657437392442}
   light2: {fileID: 4042812109236265055}

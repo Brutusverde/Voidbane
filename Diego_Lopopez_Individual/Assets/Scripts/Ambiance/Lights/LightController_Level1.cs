@@ -10,11 +10,14 @@ public class LightController_Level1 : NetworkBehaviour
 {
     public LightControllerSO lightController;
 
-    [Header("Ambiance")]
-    public UnityEngine.Rendering.Volume volume;
+    private NetworkVariable<bool> countDownStarted = new NetworkVariable<bool>();
 
-    [Header("Timer")]
-    public NetworkVariable<bool> SwitchGen = new NetworkVariable<bool>();
+    [Space]
+
+    public Texture2D[] darkLightmapDir, darkLightmapColor;
+    public Texture2D[] brightLightmapDir, brightLightmapColor;
+
+    private LightmapData[] darkLightmap, brightLightmap;
 
 
     // Start is called before the first frame update
@@ -24,19 +27,75 @@ public class LightController_Level1 : NetworkBehaviour
         base.OnNetworkSpawn();
         if (!IsHost) return;
         StartGenServerRPC();
+
+        List<LightmapData> dlightmap = new List<LightmapData>();
+
+        for (int i = 0; i < darkLightmapDir.Length; i++)
+        {
+            LightmapData lmdata = new LightmapData();
+            lmdata.lightmapDir = darkLightmapDir[i];
+            lmdata.lightmapColor = darkLightmapColor[i];
+            dlightmap.Add(lmdata);
+        }
+
+        darkLightmap = dlightmap.ToArray();
+
+
+        List<LightmapData> blightmap = new List<LightmapData>();
+
+        for (int i = 0; i < brightLightmapDir.Length; i++)
+        {
+            LightmapData lmdata = new LightmapData();
+            lmdata.lightmapDir = brightLightmapDir[i];
+            lmdata.lightmapColor = brightLightmapColor[i];
+            blightmap.Add(lmdata);
+        }
+
+        brightLightmap = blightmap.ToArray();
+        LightmapSettings.lightmaps = brightLightmap;
     }
 
     //Turn on gens
     [ServerRpc(RequireOwnership = false)]
     public void StartGenServerRPC()
     {
-        SwitchGen.Value = true;
+        lightController.LightsOn = true;
     }
 
     //Turn off gens
     [ServerRpc(RequireOwnership = false)]
     public void StopGenServerRPC()
     {
-        SwitchGen.Value = false;
+        lightController.LightsOn = false;
     }
+
+
+
+    void Update()
+    {
+        ChangeLightmap();
+    }
+
+    void ChangeLightmap()
+    {
+        if (lightController.LightsOn == false)
+        {
+            LightmapSettings.lightmaps = darkLightmap;
+        }
+        else
+        {
+            LightmapSettings.lightmaps = brightLightmap;
+        }
+
+        if (lightController.LighIsRed)
+        {
+            LightmapSettings.lightmaps = darkLightmap;
+        }
+
+        if (lightController.LighIsRed == false)
+        {
+            LightmapSettings.lightmaps = brightLightmap;
+        }
+    }
+
 }

@@ -149,7 +149,7 @@ public class Interact : NetworkBehaviour
             if (gen)
             {
                 gen.hasFuel.Value = true;
-                gen.lightController.StartTimerServerRPC(); //Starts lights timer
+                gen.lightController.StartGenServerRPC(); //Starts lights timer
                 Debug.Log("Cargado");
             }
         }
@@ -463,7 +463,45 @@ public class Interact : NetworkBehaviour
     }
     #endregion
 
+    void InteractWithGenLevel1()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDist))
+        {
+            GenBehaviour_Level1 gen = hit.transform.GetComponent<GenBehaviour_Level1>();
+            if (gen)
+            {
+                GenBehaviour_Level1 genBehaviour = gen.GetComponent<GenBehaviour_Level1>();
 
+                Item itemSelected = InventoryManager.instance.GetSelectedItem(false);
+
+                bool canUse = InventoryManager.instance.CheckForItem(itemSelected);
+                Debug.Log(canUse);
+                if (canUse && itemSelected == genBehaviour.fuelItem)
+                {
+                    Debug.Log("HAsta aqui llegamos");
+                    Item receivedItem = InventoryManager.instance.GetSelectedItem(true);
+                    InteractWithGenLevel1ServerRPC(cam.transform.forward);
+                }
+            }
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void InteractWithGenLevel1ServerRPC(Vector3 rotation)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(cam.transform.position, rotation, out hit, maxDist))
+        {
+            GenBehaviour_Level1 gen = hit.transform.GetComponent<GenBehaviour_Level1>();
+            if (gen)
+            {
+                gen.hasFuel.Value = true;
+                gen.lightController.StartGenServerRPC(); //Starts lights timer
+                Debug.Log("Cargado");
+            }
+        }
+    }
 
 
     #region Slider interaction
