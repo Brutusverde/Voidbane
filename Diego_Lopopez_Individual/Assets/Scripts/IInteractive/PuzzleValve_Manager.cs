@@ -17,14 +17,30 @@ public class PuzzleValve_Manager : NetworkBehaviour
 
     public float waterSpeed;
     public float valveSpeed;
+    public float timeToDie;
 
+    private float killTimer;
     private bool playAnim;
 
+    public AudioSource audioSource;
+    public AudioClip audioClip;
+    public GameObject playerKiller;
 
+
+    private void Start()
+    {
+        killTimer = timeToDie;
+        playAnim = false;
+    }
 
     private void Update()
     {
         water.transform.position += water.transform.up * waterSpeed * Time.deltaTime;
+        if (!playAnim)
+        {
+            killTimer -= Time.deltaTime;
+        }
+        
 
         //All valves wrong
         if (valve1.valveReady.Value == false && valve2.valveReady.Value == false && valve3.valveReady.Value == false && valve4.valveReady.Value == false)
@@ -32,36 +48,36 @@ public class PuzzleValve_Manager : NetworkBehaviour
             waterSpeed = valveSpeed * 4;
         }
 
-        //One valve right
-        if (valve1.valveReady.Value == true && valve2.valveReady.Value == false && valve3.valveReady.Value == false && valve4.valveReady.Value == false ||
-            valve1.valveReady.Value == false && valve2.valveReady.Value == true && valve3.valveReady.Value == false && valve4.valveReady.Value == false ||
-            valve1.valveReady.Value == false && valve2.valveReady.Value == false && valve3.valveReady.Value == true && valve4.valveReady.Value == false ||
-            valve1.valveReady.Value == false && valve2.valveReady.Value == false && valve3.valveReady.Value == false && valve4.valveReady.Value == true)
-        {
-            waterSpeed = valveSpeed * 3;
-        }
+        ////One valve right
+        //if (valve1.valveReady.Value == true && valve2.valveReady.Value == false && valve3.valveReady.Value == false && valve4.valveReady.Value == false ||
+        //    valve1.valveReady.Value == false && valve2.valveReady.Value == true && valve3.valveReady.Value == false && valve4.valveReady.Value == false ||
+        //    valve1.valveReady.Value == false && valve2.valveReady.Value == false && valve3.valveReady.Value == true && valve4.valveReady.Value == false ||
+        //    valve1.valveReady.Value == false && valve2.valveReady.Value == false && valve3.valveReady.Value == false && valve4.valveReady.Value == true)
+        //{
+        //    waterSpeed = valveSpeed * 3;
+        //}
 
-        //Two valves right
-        if (valve1.valveReady.Value == true && valve2.valveReady.Value == true && valve3.valveReady.Value == false && valve4.valveReady.Value == false ||
-            valve1.valveReady.Value == true && valve2.valveReady.Value == false && valve3.valveReady.Value == true && valve4.valveReady.Value == false ||
-            valve1.valveReady.Value == true && valve2.valveReady.Value == false && valve3.valveReady.Value == false && valve4.valveReady.Value == true ||
-            valve1.valveReady.Value == false && valve2.valveReady.Value == true && valve3.valveReady.Value == true && valve4.valveReady.Value == false ||
-            valve1.valveReady.Value == false && valve2.valveReady.Value == false && valve3.valveReady.Value == true && valve4.valveReady.Value == true ||
-            valve1.valveReady.Value == false && valve2.valveReady.Value == true && valve3.valveReady.Value == false && valve4.valveReady.Value == true)
+        ////Two valves right
+        //if (valve1.valveReady.Value == true && valve2.valveReady.Value == true && valve3.valveReady.Value == false && valve4.valveReady.Value == false ||
+        //    valve1.valveReady.Value == true && valve2.valveReady.Value == false && valve3.valveReady.Value == true && valve4.valveReady.Value == false ||
+        //    valve1.valveReady.Value == true && valve2.valveReady.Value == false && valve3.valveReady.Value == false && valve4.valveReady.Value == true ||
+        //    valve1.valveReady.Value == false && valve2.valveReady.Value == true && valve3.valveReady.Value == true && valve4.valveReady.Value == false ||
+        //    valve1.valveReady.Value == false && valve2.valveReady.Value == false && valve3.valveReady.Value == true && valve4.valveReady.Value == true ||
+        //    valve1.valveReady.Value == false && valve2.valveReady.Value == true && valve3.valveReady.Value == false && valve4.valveReady.Value == true)
 
-        {
-            waterSpeed = valveSpeed * 2;
-        }
+        //{
+        //    waterSpeed = valveSpeed * 2;
+        //}
 
-        //Three valves right
-        if (valve1.valveReady.Value == true && valve2.valveReady.Value == true && valve3.valveReady.Value == true && valve4.valveReady.Value == false ||
-            valve1.valveReady.Value == true && valve2.valveReady.Value == false && valve3.valveReady.Value == true && valve4.valveReady.Value == true ||
-            valve1.valveReady.Value == true && valve2.valveReady.Value == true && valve3.valveReady.Value == false && valve4.valveReady.Value == true ||
-            valve1.valveReady.Value == false && valve2.valveReady.Value == true && valve3.valveReady.Value == true && valve4.valveReady.Value == true )
+        ////Three valves right
+        //if (valve1.valveReady.Value == true && valve2.valveReady.Value == true && valve3.valveReady.Value == true && valve4.valveReady.Value == false ||
+        //    valve1.valveReady.Value == true && valve2.valveReady.Value == false && valve3.valveReady.Value == true && valve4.valveReady.Value == true ||
+        //    valve1.valveReady.Value == true && valve2.valveReady.Value == true && valve3.valveReady.Value == false && valve4.valveReady.Value == true ||
+        //    valve1.valveReady.Value == false && valve2.valveReady.Value == true && valve3.valveReady.Value == true && valve4.valveReady.Value == true )
 
-        {
-            waterSpeed = valveSpeed * 1;
-        }
+        //{
+        //    waterSpeed = valveSpeed * 1;
+        //}
 
         //All valves right
         if (valve1.valveReady.Value == true && valve2.valveReady.Value == true && valve3.valveReady.Value == true && valve4.valveReady.Value == true)
@@ -69,9 +85,16 @@ public class PuzzleValve_Manager : NetworkBehaviour
             waterSpeed = valveSpeed * -50;
             doorLock.SetActive(false);
             floorWater.SetActive(false);
-
+            audioSource.clip = audioClip;
+            audioSource.Play();
             doorAnim.SetBool("Open", true);
+            playAnim = true;
             //doorAnim.SetBool("Close", false);
+        }
+
+        if(killTimer <= 0)
+        {
+            playerKiller.SetActive(true);
         }
     }
 }

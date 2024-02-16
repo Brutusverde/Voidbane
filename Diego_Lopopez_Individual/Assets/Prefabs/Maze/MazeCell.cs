@@ -15,6 +15,8 @@ public class MazeCell : MonoBehaviour
 
     public GameObject last;
 
+    public GameObject trigger;
+
     public Transform locationPoint;
 
     public GameObject leftFloor;
@@ -69,5 +71,6 @@ public class MazeCell : MonoBehaviour
     public void LastCell()
     {
         last.SetActive(true);
+        trigger.SetActive(true);
     }
 }

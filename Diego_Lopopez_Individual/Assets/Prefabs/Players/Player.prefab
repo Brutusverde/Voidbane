@@ -8553,6 +8553,7 @@ MonoBehaviour:
   big: {x: 0.1, y: 0.1, z: 0.1}
   doorOpen: {fileID: 8300000, guid: 8053b5c9eaaa6f64aab8771970e6e30c, type: 3}
   doorClose: {fileID: 8300000, guid: ae2e744fa80a79d4aaa815c90fac5cab, type: 3}
+  valveMove: {fileID: 8300000, guid: 14b23a1fd0eb3f446b17c25a768f7d04, type: 3}
   objectPick: {fileID: 8300000, guid: 22ca9a643a913e040a4103bc916322b4, type: 3}
 --- !u!114 &7044979324433804868
 MonoBehaviour:

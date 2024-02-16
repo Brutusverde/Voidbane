@@ -44,6 +44,7 @@ public class Interact : NetworkBehaviour
     //Door
     public AudioClip doorOpen;
     public AudioClip doorClose;
+    public AudioClip valveMove;
 
     //Objects
     public AudioClip objectPick;
@@ -221,7 +222,14 @@ public class Interact : NetworkBehaviour
 
                     InventoryManager.instance.AddItem(item);
                 } 
-            }  
+            }
+
+            PuzzleValve puzzleValve = hit.transform.GetComponent<PuzzleValve>();
+            if (puzzleValve)
+            {
+                audioSource.clip = valveMove;
+                audioSource.Play();
+            }
         }
     }
     #endregion
