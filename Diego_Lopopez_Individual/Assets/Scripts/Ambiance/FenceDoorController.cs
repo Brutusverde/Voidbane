@@ -10,6 +10,8 @@ public class FenceDoorController : MonoBehaviour, IInteractive
     public AudioClip doorSound;
     public AudioSource audiosource;
 
+    public Animator switchAnimator;
+
     private void Start()
     {
         openDoor = false;
@@ -36,6 +38,7 @@ public class FenceDoorController : MonoBehaviour, IInteractive
             animator.Play("FenceDoorOpen");
             audiosource.clip = doorSound;
             audiosource.Play();
+            switchAnimator.SetBool("Open", true);
         }
     }
 
