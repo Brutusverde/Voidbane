@@ -33,6 +33,7 @@ The project was built entirely from scratch: gameplay programming in C#, origina
 |---|---|
 | Move | WASD |
 | Look | Mouse |
+| Jump | Space |
 | Interact / Pick up | E |
 | Switch item | Mouse wheel |
 
